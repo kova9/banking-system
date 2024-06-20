@@ -20,13 +20,12 @@ import java.math.BigDecimal;
 public class Customer {
 
     @Id
-    @Column
+    @Column(length = 36)
     private String customerId;
 
     @Column
     private String name;
 
-    // ?
     @Column
     private String address;
 

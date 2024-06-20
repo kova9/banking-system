@@ -1,6 +1,7 @@
 package com.bankingSystem.bankingSystem.dataaccess.sql;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
+import com.bankingSystem.bankingSystem.obj.CommonFields;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -30,8 +31,8 @@ public class TransactionSql implements Specification<Transaction> {
     }
     @Override
     public Predicate toPredicate(Root<Transaction> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Predicate senderAccount = criteriaBuilder.equal(root.get("senderAccountId"), this.accountId);
-        Predicate receiverAccount = criteriaBuilder.equal(root.get("receiverAccountId"), this.accountId);
+        Predicate senderAccount = criteriaBuilder.equal(root.get(CommonFields.SENDER_ACCOUNT_ID), this.accountId);
+        Predicate receiverAccount = criteriaBuilder.equal(root.get(CommonFields.RECEIVER_ACCOUNT_ID), this.accountId);
 
         Predicate orPredicate = criteriaBuilder.or(senderAccount, receiverAccount);
 
@@ -40,20 +41,20 @@ public class TransactionSql implements Specification<Transaction> {
 
 
         if(this.minAmount != null){
-            Predicate minAmountPred = criteriaBuilder.greaterThanOrEqualTo(root.get("amount"), this.minAmount);
+            Predicate minAmountPred = criteriaBuilder.greaterThanOrEqualTo(root.get(CommonFields.AMOUNT), this.minAmount);
             allPredicates.add(minAmountPred);
         }
 
         if (this.maxAmount != null) {
-            Predicate maxAmountPred = criteriaBuilder.lessThanOrEqualTo(root.get("amount"), this.maxAmount);
+            Predicate maxAmountPred = criteriaBuilder.lessThanOrEqualTo(root.get(CommonFields.AMOUNT), this.maxAmount);
             allPredicates.add(maxAmountPred);
         }
         if (this.endDate != null) {
-            Predicate endDatePred = criteriaBuilder.lessThanOrEqualTo(root.get("timestamp"), this.endDate);
+            Predicate endDatePred = criteriaBuilder.lessThanOrEqualTo(root.get(CommonFields.TIMESTAMP), this.endDate);
             allPredicates.add(endDatePred);
         }
         if (this.startDate != null){
-            Predicate startDatePred = criteriaBuilder.greaterThanOrEqualTo(root.get("timestamp"), this.endDate);
+            Predicate startDatePred = criteriaBuilder.greaterThanOrEqualTo(root.get(CommonFields.TIMESTAMP), this.endDate);
             allPredicates.add(startDatePred);
         }
 

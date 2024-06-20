@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 public class Transaction {
 
     @Id
-    @Column
+    @Column(length = 36)
     private String transactionId;
 
     @Column

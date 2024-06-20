@@ -5,6 +5,7 @@ import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
 import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
 import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionRepository;
 import com.bankingSystem.bankingSystem.dataaccess.sql.TransactionSql;
+import com.bankingSystem.bankingSystem.enums.CustomerId;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,11 +40,16 @@ public class TransactionProvider {
 
     public ResponseEntity<List<Transaction>> filterTransactions(String customerId, Timestamp startDate, Timestamp endDate, BigDecimal minAmount, BigDecimal maxAmount) {
         try{
-            Optional<Customer> customer = customerRepository.findById(customerId);
+            CustomerId custId = CustomerId.fromCode(customerId);
+            if(custId == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
+            Optional<Customer> customer = customerRepository.findById(custId.getAccount());
             if(customer.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
+
             String accountId = customer.get().getAccounts();
 
             Specification<Transaction> specification = new TransactionSql(accountId, startDate, endDate, minAmount, maxAmount);
