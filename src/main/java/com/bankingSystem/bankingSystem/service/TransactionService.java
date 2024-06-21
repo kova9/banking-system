@@ -105,7 +105,9 @@ public class TransactionService {
     }
 
     private boolean checkTransactionData(TransactionDto dto){
-        if(dto.getSenderAccountId().isEmpty() || dto.getReceiverAccountId().isEmpty() || dto.getAmount() == null || dto.getCurrencyId().isEmpty()){
+        if(dto.getSenderAccountId() == null || dto.getReceiverAccountId() == null || dto.getCurrencyId() == null ||
+                dto.getSenderAccountId().isEmpty() || dto.getReceiverAccountId().isEmpty() || dto.getAmount() == null || dto.getCurrencyId().isEmpty()){
+
             return false;
         }else {
             boolean isSenderValid = checkAccount(dto.getSenderAccountId());
