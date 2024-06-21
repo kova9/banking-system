@@ -1,8 +1,11 @@
-package com.bankingSystem.bankingSystem.resource;
+package com.bankingSystem.bankingSystem.controller;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
-import com.bankingSystem.bankingSystem.provider.TransactionProvider;
+import com.bankingSystem.bankingSystem.obj.TransactionResponse;
+import com.bankingSystem.bankingSystem.service.TransactionService;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +14,19 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
-@RequestMapping("/main")
+@RequestMapping("/transaction")
 @RequiredArgsConstructor
-public class TransactionResource {
-    private final TransactionProvider provider;
+public class TransactionController {
 
-    @GetMapping("/transactions/all")
+    @Autowired
+    private final TransactionService provider;
+
+    @PostMapping("/")
+    public ResponseEntity<TransactionResponse> saveTransaction(@RequestBody JsonNode in){
+        return provider.saveTransaction(in);
+    }
+
+    @GetMapping("/transaction/all")
     public ResponseEntity<List<Transaction>> getAllTransactions(){
         return provider.getAllTransactions();
     }
@@ -29,4 +39,5 @@ public class TransactionResource {
                                                                 @RequestParam(required = false) BigDecimal maxAmount){
         return provider.filterTransactions(customerId, startDate, endDate, minAmount, maxAmount);
     }
+
 }

@@ -1,4 +1,4 @@
-package com.bankingSystem.bankingSystem.provider;
+package com.bankingSystem.bankingSystem.service;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @Slf4j
-public class CustomerProvider {
+public class CustomerService {
     private final CustomerRepository customerRepository;
 
     public ResponseEntity<List<Customer>> getAllCustomers(){

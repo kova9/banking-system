@@ -1,8 +1,9 @@
-package com.bankingSystem.bankingSystem.resource;
+package com.bankingSystem.bankingSystem.controller;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
-import com.bankingSystem.bankingSystem.provider.CustomerProvider;
+import com.bankingSystem.bankingSystem.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/customer")
 @RequiredArgsConstructor
-public class CustomerResource {
-   private final CustomerProvider provider;
+public class CustomerController {
+
+   @Autowired
+   private final CustomerService provider;
 
    @GetMapping("/all")
    public ResponseEntity<List<Customer>> getAllCustomers(){

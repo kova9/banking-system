@@ -1,4 +1,4 @@
-package com.bankingSystem.bankingSystem.provider;
+package com.bankingSystem.bankingSystem.service;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
@@ -9,6 +9,7 @@ import com.bankingSystem.bankingSystem.dataaccess.sql.TransactionSql;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +24,14 @@ import java.util.List;
 @Service
 @Transactional
 @Slf4j
-public class AccountProvider {
+public class AccountService {
+
+    @Autowired
     private final AccountRepository accountRepository;
+
+    @Autowired
     private final TransactionRepository transactionRepository;
-    private final CustomerRepository customerRepository;
+
 
     public ResponseEntity<List<Account>> getTurnovers(Timestamp startDate, Timestamp endDate){
         List<Account> accounts = new ArrayList<>(accountRepository.findAll());
