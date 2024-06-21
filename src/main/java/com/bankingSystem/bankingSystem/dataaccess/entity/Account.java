@@ -1,5 +1,6 @@
 package com.bankingSystem.bankingSystem.dataaccess.entity;
 
+import com.bankingSystem.bankingSystem.obj.AccountDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -26,7 +27,6 @@ public class Account {
     @Column
     private String accountNumber;
 
-    // ?
     @Column
     private String accountType;
 
@@ -35,4 +35,16 @@ public class Account {
 
     @Column
     private BigDecimal pastMonthTurnover;
+
+    public AccountDto toDto(){
+        AccountDto dto = new AccountDto();
+
+        dto.setAccountId(getAccountId());
+        dto.setAccountNumber(getAccountNumber());
+        dto.setAccountType(getAccountType());
+        dto.setBalance(getBalance());
+        dto.setPastMonthTurnover(getPastMonthTurnover());
+
+        return dto;
+    }
 }

@@ -3,6 +3,7 @@ package com.bankingSystem.bankingSystem.service;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
+import com.bankingSystem.bankingSystem.dataaccess.logic.AccountLogic;
 import com.bankingSystem.bankingSystem.dataaccess.logic.TransactionLogic;
 import com.bankingSystem.bankingSystem.dataaccess.repository.AccountRepository;
 import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
@@ -10,6 +11,8 @@ import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionReposito
 import com.bankingSystem.bankingSystem.dataaccess.sql.TransactionSql;
 import com.bankingSystem.bankingSystem.enums.AccountId;
 import com.bankingSystem.bankingSystem.enums.CustomerId;
+import com.bankingSystem.bankingSystem.obj.AccountDto;
+import com.bankingSystem.bankingSystem.obj.EmailInfo;
 import com.bankingSystem.bankingSystem.obj.TransactionDto;
 import com.bankingSystem.bankingSystem.obj.TransactionResponse;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -43,6 +46,9 @@ public class TransactionService {
 
     @Autowired
     private final AccountRepository accountRepository;
+
+    @Autowired
+    private final EmailSenderService emailSenderService;
 
     public ResponseEntity<List<Transaction>> getAllTransactions(){
         List<Transaction> transactions = new ArrayList<>(transactionRepository.findAll());
@@ -80,18 +86,54 @@ public class TransactionService {
     public ResponseEntity<TransactionResponse> saveTransaction(JsonNode in) {
         TransactionDto dto = TransactionDto.fromJson(in);
 
-        boolean isTransactionValid = (checkTransactionData(dto));
-        if(!isTransactionValid){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try{
+            boolean isTransactionValid = (checkTransactionData(dto));
+            if(!isTransactionValid){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            Transaction newTransaction = TransactionLogic.getInstance().create(dto);
+            transactionRepository.save(newTransaction);
+
+            TransactionResponse response = new TransactionResponse();
+            response.setTransactionId(newTransaction.getTransactionId());
+
+            sendInfoMails(newTransaction);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private void sendInfoMails(Transaction transaction){
+        Optional<Account> senderAccount = accountRepository.findById(transaction.getSenderAccountId());
+        Optional<Account> receiverAccount = accountRepository.findById(transaction.getReceiverAccountId());
+
+        updateAccounts(senderAccount, transaction, false);
+        updateAccounts(receiverAccount, transaction, true);
+
+        EmailInfo senderInfo = createEmailInfo(transaction, senderAccount, false);
+        EmailInfo receiverInfo = createEmailInfo(transaction, receiverAccount, true);
+
+        String senderMail = customerRepository.findByAccountId(senderAccount.get().getAccountId()).getEmail();
+        String receiverMail = customerRepository.findByAccountId(receiverAccount.get().getAccountId()).getEmail();
+
+        emailSenderService.sendMail(senderMail, senderInfo);
+        emailSenderService.sendMail(receiverMail, receiverInfo);
+    }
+
+    private void updateAccounts(Optional<Account> account, Transaction transaction, boolean isReceiver){
+        AccountDto dto = account.get().toDto();
+
+        if(isReceiver){
+            dto.setBalance(dto.getBalance().add(transaction.getAmount()));
+        }else{
+            dto.setBalance(dto.getBalance().subtract(transaction.getAmount()));
         }
 
-        Transaction newTransaction = TransactionLogic.getInstance().create(dto);
-        transactionRepository.save(newTransaction);
-
-        TransactionResponse response = new TransactionResponse();
-        response.setTransactionId(newTransaction.getTransactionId());
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        Optional<Account> updatedAccount = AccountLogic.getInstance().update(account, dto);
+        accountRepository.save(updatedAccount.get());
     }
 
     private boolean checkAccount(String accountId){
@@ -115,5 +157,25 @@ public class TransactionService {
 
             return isReceiverValid && isSenderValid;
         }
+    }
+
+    private EmailInfo createEmailInfo(Transaction newTransaction, Optional<Account> account, boolean isReceiver){
+        EmailInfo emailInfo = new EmailInfo();
+
+        emailInfo.setTransactionId(newTransaction.getTransactionId());
+        emailInfo.setAmount(newTransaction.getAmount());
+        emailInfo.setOldBalance(account.get().getBalance());
+
+        if(isReceiver){
+            emailInfo.setNewBalance(account.get().getBalance().add(newTransaction.getAmount()));
+            emailInfo.setType("added");
+        }else{
+            emailInfo.setNewBalance(account.get().getBalance().subtract(newTransaction.getAmount()));
+            emailInfo.setType("deducted");
+        }
+
+        emailInfo.setCurrency(newTransaction.getCurrencyId());
+
+        return emailInfo;
     }
 }

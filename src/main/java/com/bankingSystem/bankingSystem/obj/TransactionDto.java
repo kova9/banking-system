@@ -8,10 +8,15 @@ import java.math.BigDecimal;
 
 @Data
 public class TransactionDto {
+
     private String senderAccountId;
+
     private String receiverAccountId;
+
     private BigDecimal amount;
+
     private String currencyId;
+
     private String message;
 
     public static TransactionDto fromJson(JsonNode json) {

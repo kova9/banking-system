@@ -1,6 +1,7 @@
 package com.bankingSystem.bankingSystem.dataaccess.logic;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
+import com.bankingSystem.bankingSystem.enums.AccountId;
 import com.bankingSystem.bankingSystem.obj.TransactionDto;
 
 import java.time.LocalDateTime;
@@ -22,8 +23,8 @@ public class TransactionLogic {
         transaction.setAmount(dto.getAmount());
         transaction.setMessage(dto.getMessage());
         transaction.setCurrencyId(dto.getCurrencyId());
-        transaction.setSenderAccountId(dto.getSenderAccountId());
-        transaction.setReceiverAccountId(dto.getReceiverAccountId());
+        transaction.setSenderAccountId(AccountId.fromCode(dto.getSenderAccountId()).getAccount());
+        transaction.setReceiverAccountId(AccountId.fromCode(dto.getReceiverAccountId()).getAccount());
         transaction.setTimestamp(LocalDateTime.now());
 
         return transaction;

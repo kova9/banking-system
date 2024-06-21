@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,11 @@ public class AccountService {
     private final TransactionRepository transactionRepository;
 
 
-    public ResponseEntity<List<Account>> getTurnovers(Timestamp startDate, Timestamp endDate){
+    public ResponseEntity<List<Account>> getTurnovers(){
+        Timestamp startDate = Timestamp.valueOf(LocalDateTime.now().minusMonths(1));
+        Timestamp endDate = Timestamp.valueOf(LocalDateTime.now());
+
+
         List<Account> accounts = new ArrayList<>(accountRepository.findAll());
 
         for(Account account : accounts){
