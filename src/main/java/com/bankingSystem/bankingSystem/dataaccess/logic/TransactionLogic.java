@@ -3,18 +3,13 @@ package com.bankingSystem.bankingSystem.dataaccess.logic;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
 import com.bankingSystem.bankingSystem.enums.AccountId;
 import com.bankingSystem.bankingSystem.obj.TransactionDto;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Component
 public class TransactionLogic {
-
-    private static final TransactionLogic INSTANCE = new TransactionLogic();
-
-    private TransactionLogic(){
-    }
-
-    public static TransactionLogic getInstance(){return INSTANCE;}
 
     public Transaction create(TransactionDto dto){
         Transaction transaction = new Transaction();

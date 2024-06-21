@@ -16,15 +16,11 @@ import com.bankingSystem.bankingSystem.obj.EmailInfo;
 import com.bankingSystem.bankingSystem.obj.TransactionDto;
 import com.bankingSystem.bankingSystem.obj.TransactionResponse;
 import com.fasterxml.jackson.databind.JsonNode;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -32,23 +28,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
-@Transactional
 @Slf4j
 public class TransactionService {
 
-    @Autowired
     private final TransactionRepository transactionRepository;
-
-    @Autowired
     private final CustomerRepository customerRepository;
-
-    @Autowired
     private final AccountRepository accountRepository;
-
-    @Autowired
     private final EmailSenderService emailSenderService;
+    private final AccountLogic accountLogic;
+    private final TransactionLogic transactionLogic;
+
+    // Constructor Injection
+    public TransactionService(TransactionRepository transactionRepository, CustomerRepository customerRepository,
+                              AccountRepository accountRepository, EmailSenderService emailSenderService,
+                              AccountLogic accountLogic, TransactionLogic transactionLogic){
+
+        this.transactionRepository = transactionRepository;
+        this.customerRepository = customerRepository;
+        this.accountRepository = accountRepository;
+        this.emailSenderService = emailSenderService;
+        this.accountLogic = accountLogic;
+        this.transactionLogic = transactionLogic;
+    }
 
     public ResponseEntity<List<Transaction>> getAllTransactions(){
         List<Transaction> transactions = new ArrayList<>(transactionRepository.findAll());
@@ -92,7 +94,7 @@ public class TransactionService {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            Transaction newTransaction = TransactionLogic.getInstance().create(dto);
+            Transaction newTransaction = transactionLogic.create(dto);
             transactionRepository.save(newTransaction);
 
             TransactionResponse response = new TransactionResponse();
@@ -132,7 +134,7 @@ public class TransactionService {
             dto.setBalance(dto.getBalance().subtract(transaction.getAmount()));
         }
 
-        Optional<Account> updatedAccount = AccountLogic.getInstance().update(account, dto);
+        Optional<Account> updatedAccount = accountLogic.update(account, dto);
         accountRepository.save(updatedAccount.get());
     }
 

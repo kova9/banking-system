@@ -4,8 +4,6 @@ import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
 import com.bankingSystem.bankingSystem.obj.TransactionResponse;
 import com.bankingSystem.bankingSystem.service.TransactionService;
 import com.fasterxml.jackson.databind.JsonNode;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +13,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/transaction")
-@RequiredArgsConstructor
 public class TransactionController {
 
-    @Autowired
     private final TransactionService provider;
+
+    public TransactionController(TransactionService provider){
+        this.provider = provider;
+    }
 
     @PostMapping("/")
     public ResponseEntity<TransactionResponse> saveTransaction(@RequestBody JsonNode in){

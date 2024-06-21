@@ -2,8 +2,6 @@ package com.bankingSystem.bankingSystem.service;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
-@Transactional
 @Slf4j
 public class CustomerService {
     private final CustomerRepository customerRepository;
+
+    public CustomerService(CustomerRepository customerRepository){
+        this.customerRepository = customerRepository;
+    }
 
     public ResponseEntity<List<Customer>> getAllCustomers(){
         List<Customer> customers = new ArrayList<>(customerRepository.findAll());
