@@ -11,6 +11,7 @@ import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionReposito
 import com.bankingSystem.bankingSystem.dataaccess.sql.TransactionSql;
 import com.bankingSystem.bankingSystem.enums.AccountId;
 import com.bankingSystem.bankingSystem.enums.CustomerId;
+import com.bankingSystem.bankingSystem.exception.BankingSystemException;
 import com.bankingSystem.bankingSystem.obj.AccountDto;
 import com.bankingSystem.bankingSystem.obj.EmailInfo;
 import com.bankingSystem.bankingSystem.obj.TransactionDto;
@@ -27,6 +28,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.bankingSystem.bankingSystem.exception.ExceptionMessages.*;
 
 @Service
 @Slf4j
@@ -52,60 +55,55 @@ public class TransactionService {
         this.transactionLogic = transactionLogic;
     }
 
+    private static final String ADDED = "added";
+    private static final String DEDUCTED = "deducted";
+
     public ResponseEntity<List<Transaction>> getAllTransactions(){
         List<Transaction> transactions = new ArrayList<>(transactionRepository.findAll());
 
         if(transactions.isEmpty()){
-            return new ResponseEntity<>(transactions, HttpStatus.NO_CONTENT);
+            throw BankingSystemException.notFound().message(ERROR_NO_AVAILABLE_TRANSACTIONS).build();
         }
 
-        return new ResponseEntity<>(transactions, HttpStatus.OK);
+        return ResponseEntity.ok(transactions);
     }
 
     public ResponseEntity<List<Transaction>> filterTransactions(String customerId, Timestamp startDate, Timestamp endDate, BigDecimal minAmount, BigDecimal maxAmount) {
-        try{
-            CustomerId custId = CustomerId.fromCode(customerId);
-            if(custId == null){
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
 
-            Optional<Customer> customer = customerRepository.findById(custId.getAccount());
-            if(customer.isEmpty()){
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-
-            String accountId = customer.get().getAccounts();
-
-            Specification<Transaction> specification = new TransactionSql(accountId, startDate, endDate, minAmount, maxAmount);
-            List<Transaction> transactions = transactionRepository.findAll(specification);
-
-            return new ResponseEntity<>(transactions, HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        CustomerId custId = CustomerId.fromCode(customerId);
+        if(custId == null){
+            throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
         }
+
+        Optional<Customer> customer = customerRepository.findById(custId.getAccount());
+        if(customer.isEmpty()){
+            throw BankingSystemException.notFound().message(ERROR_ACCOUNT_NOT_FOUND).build();
+        }
+
+        String accountId = customer.get().getAccounts();
+
+        Specification<Transaction> specification = new TransactionSql(accountId, startDate, endDate, minAmount, maxAmount);
+        List<Transaction> transactions = transactionRepository.findAll(specification);
+
+
+        return ResponseEntity.ok(transactions);
     }
 
     public ResponseEntity<TransactionResponse> saveTransaction(JsonNode in) {
         TransactionDto dto = TransactionDto.fromJson(in);
 
-        try{
-            boolean isTransactionValid = (checkTransactionData(dto));
-            if(!isTransactionValid){
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+        checkTransactionData(dto);
 
-            Transaction newTransaction = transactionLogic.create(dto);
-            transactionRepository.save(newTransaction);
+        Transaction newTransaction = transactionLogic.create(dto);
+        transactionRepository.save(newTransaction);
 
-            TransactionResponse response = new TransactionResponse();
-            response.setTransactionId(newTransaction.getTransactionId());
+        TransactionResponse response = new TransactionResponse();
+        response.setTransactionId(newTransaction.getTransactionId());
 
-            sendInfoMails(newTransaction);
+        sendInfoMails(newTransaction);
 
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
     }
 
     private void sendInfoMails(Transaction transaction){
@@ -148,16 +146,18 @@ public class TransactionService {
         return account.isPresent();
     }
 
-    private boolean checkTransactionData(TransactionDto dto){
+    private void checkTransactionData(TransactionDto dto){
         if(dto.getSenderAccountId() == null || dto.getReceiverAccountId() == null || dto.getCurrencyId() == null ||
                 dto.getSenderAccountId().isEmpty() || dto.getReceiverAccountId().isEmpty() || dto.getAmount() == null || dto.getCurrencyId().isEmpty()){
 
-            return false;
+            throw BankingSystemException.badRequest().message(ERROR_REQUEST_DATA_NOT_COMPLETE).build();
         }else {
             boolean isSenderValid = checkAccount(dto.getSenderAccountId());
             boolean isReceiverValid = checkAccount(dto.getReceiverAccountId());
 
-            return isReceiverValid && isSenderValid;
+            if(!isReceiverValid || !isSenderValid){
+                throw BankingSystemException.badRequest().message(ERROR_SENDER_OR_RECEIVER_ACCOUNT_NOT_FOUND).build();
+            }
         }
     }
 
@@ -170,10 +170,10 @@ public class TransactionService {
 
         if(isReceiver){
             emailInfo.setNewBalance(account.get().getBalance().add(newTransaction.getAmount()));
-            emailInfo.setType("added");
+            emailInfo.setType(ADDED);
         }else{
             emailInfo.setNewBalance(account.get().getBalance().subtract(newTransaction.getAmount()));
-            emailInfo.setType("deducted");
+            emailInfo.setType(DEDUCTED);
         }
 
         emailInfo.setCurrency(newTransaction.getCurrencyId());

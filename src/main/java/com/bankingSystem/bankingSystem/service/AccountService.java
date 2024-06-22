@@ -43,7 +43,7 @@ public class AccountService {
             accountRepository.save(account);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     private BigDecimal calculateTurnover(Account account, Timestamp startDate, Timestamp endDate){
