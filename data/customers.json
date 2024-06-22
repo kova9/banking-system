@@ -1,0 +1,82 @@
+[
+  {
+    "customerId": "c3b36a50-5e4c-4e0b-9d8e-fd693f278f49",
+    "accounts": "d6a8f71c-6c29-4f62-9653-8a4b919e8c88",
+    "name": "Tomislav Kovacevic",
+    "address": "456 Elm St, Othertown, USA",
+    "email": "kovacevic.tomislav9@gmail.com",
+    "phoneNumber": "234-567-8901"
+  },
+  {
+    "customerId": "72e637a6-4f3b-4e5d-9531-29b3450de8b8",
+    "accounts": "4bfec43e-89ed-4094-b8e0-4a217c7a8c33",
+    "name": "Jane Smith",
+    "address": "456 Elm St, Othertown, USA",
+    "email": "janesmith@example.com",
+    "phoneNumber": "234-567-8901"
+  },
+  {
+    "customerId": "fb8d4b24-302e-4b59-80a0-97d0c168d437",
+    "accounts": "0c1f4c2e-c08c-4e4a-9a27-2c1a66d70c92",
+    "name": "Alice Johnson",
+    "address": "789 Oak St, Sometown, USA",
+    "email": "alicejohnson@example.com",
+    "phoneNumber": "345-678-9012"
+  },
+  {
+    "customerId": "4e87dc7c-6c97-4e77-92b1-4f6d58a0be9d",
+    "accounts": "d24d0648-1c8e-4f02-9e2d-458d2849f92d",
+    "name": "Bob Brown",
+    "address": "101 Pine St, Anothertown, USA",
+    "email": "bobbrown@example.com",
+    "phoneNumber": "456-789-0123"
+  },
+  {
+    "customerId": "c805f63b-410d-4916-87cb-23b2df4d5f07",
+    "accounts": "bc24903b-4208-43e0-92f1-1b5a3f4c12f5",
+    "name": "Carol White",
+    "address": "202 Cedar St, Thistown, USA",
+    "email": "carolwhite@example.com",
+    "phoneNumber": "567-890-1234"
+  },
+  {
+    "customerId": "60b6edb8-761d-4d94-b805-905170b319c8",
+    "accounts": "87f2b194-9582-4c56-b848-1d8b4e66c0a3",
+    "name": "David Black",
+    "address": "303 Birch St, Thatown, USA",
+    "email": "davidblack@example.com",
+    "phoneNumber": "678-901-2345"
+  },
+  {
+    "customerId": "42baccb6-5ef7-40c7-8a1a-2f3dce9476e8",
+    "accounts": "ad0c60b3-fd6a-4ab7-a6b7-995f9cf7dbeb",
+    "name": "Eve Green",
+    "address": "404 Walnut St, Whoville, USA",
+    "email": "evegreen@example.com",
+    "phoneNumber": "789-012-3456"
+  },
+  {
+    "customerId": "d8b5c5c9-4c4d-4f3e-8aeb-9268a74d1d4a",
+    "accounts": "43890d5b-d1ff-40ad-a7b2-0c4a024d3093",
+    "name": "Frank Blue",
+    "address": "505 Maple St, Whoville, USA",
+    "email": "frankblue@example.com",
+    "phoneNumber": "890-123-4567"
+  },
+  {
+    "customerId": "de2c9b2d-32a3-420e-8f84-3a51b4c92d61",
+    "accounts": "fa25728c-3f21-4f5d-8c8e-9c1a3782f8e7",
+    "name": "Grace Red",
+    "address": "606 Spruce St, Heretown, USA",
+    "email": "gracered@example.com",
+    "phoneNumber": "901-234-5678"
+  },
+  {
+    "customerId": "69e92d14-8c65-4fd7-8b20-4e4ab4b9d0d5",
+    "accounts": "b9a8b514-60d1-45f1-9a02-5f2e0a7654b5",
+    "name": "Henry Yellow",
+    "address": "707 Fir St, Thattown, USA",
+    "email": "henryyellow@example.com",
+    "phoneNumber": "012-345-6789"
+  }
+]

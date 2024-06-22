@@ -22,6 +22,10 @@ public class BankingSystemException extends RuntimeException {
         return new BankingSystemExceptionBuilder(HttpStatus.NOT_FOUND);
     }
 
+    public static BankingSystemExceptionBuilder internalServerError(){
+        return new BankingSystemExceptionBuilder(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     public static class BankingSystemExceptionBuilder {
         private String message;
         private HttpStatus status;

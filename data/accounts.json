@@ -1,0 +1,72 @@
+[
+  {
+    "accountId": "d6a8f71c-6c29-4f62-9653-8a4b919e8c88",
+    "accountNumber": "1234567890",
+    "accountType": "Checking",
+    "balance": 5732.24,
+    "pastMonthTurnover": 1345.65
+  },
+  {
+    "accountId": "4bfec43e-89ed-4094-b8e0-4a217c7a8c33",
+    "accountNumber": "2345678901",
+    "accountType": "Savings",
+    "balance": 9843.12,
+    "pastMonthTurnover": 2345.67
+  },
+  {
+    "accountId": "0c1f4c2e-c08c-4e4a-9a27-2c1a66d70c92",
+    "accountNumber": "3456789012",
+    "accountType": "Checking",
+    "balance": 1234.56,
+    "pastMonthTurnover": 876.54
+  },
+  {
+    "accountId": "d24d0648-1c8e-4f02-9e2d-458d2849f92d",
+    "accountNumber": "4567890123",
+    "accountType": "Savings",
+    "balance": 4567.89,
+    "pastMonthTurnover": 1678.9
+  },
+  {
+    "accountId": "bc24903b-4208-43e0-92f1-1b5a3f4c12f5",
+    "accountNumber": "5678901234",
+    "accountType": "Checking",
+    "balance": 2345.67,
+    "pastMonthTurnover": 987.65
+  },
+  {
+    "accountId": "87f2b194-9582-4c56-b848-1d8b4e66c0a3",
+    "accountNumber": "6789012345",
+    "accountType": "Savings",
+    "balance": 6789.01,
+    "pastMonthTurnover": 1234.56
+  },
+  {
+    "accountId": "ad0c60b3-fd6a-4ab7-a6b7-995f9cf7dbeb",
+    "accountNumber": "7890123456",
+    "accountType": "Checking",
+    "balance": 3456.78,
+    "pastMonthTurnover": 789.01
+  },
+  {
+    "accountId": "43890d5b-d1ff-40ad-a7b2-0c4a024d3093",
+    "accountNumber": "8901234567",
+    "accountType": "Savings",
+    "balance": 7890.12,
+    "pastMonthTurnover": 456.78
+  },
+  {
+    "accountId": "fa25728c-3f21-4f5d-8c8e-9c1a3782f8e7",
+    "accountNumber": "9012345678",
+    "accountType": "Checking",
+    "balance": 9012.34,
+    "pastMonthTurnover": 123.45
+  },
+  {
+    "accountId": "b9a8b514-60d1-45f1-9a02-5f2e0a7654b5",
+    "accountNumber": "0123456789",
+    "accountType": "Savings",
+    "balance": 1234.56,
+    "pastMonthTurnover": 345.67
+  }
+]
