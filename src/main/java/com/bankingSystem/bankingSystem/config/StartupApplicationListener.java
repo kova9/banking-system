@@ -18,6 +18,8 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 @Component
@@ -35,38 +37,58 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        parseAndImportTransactions();
-        parseAndImportAccounts();
-        parseAndImportCustomers();
+        ExecutorService executorService = Executors.newFixedThreadPool(3); // 3 threads
+
+        // Submit tasks for parallel execution
+        executorService.submit(this::parseAndImportTransactionsFirstHalf);
+        executorService.submit(this::parseAndImportTransactionsSecondHalf);
+        executorService.submit(() -> {
+            parseAndImportAccounts();
+            parseAndImportCustomers();
+        });
+
+        // Shutdown the executor service
+        executorService.shutdown();
+    }
+
+    public void parseAndImportTransactionsFirstHalf() {
+        parseAndImportTransactions(0);
+    }
+
+    public void parseAndImportTransactionsSecondHalf() {
+        parseAndImportTransactions(1);
     }
 
     Logger logger = Logger.getLogger(getClass().getName());
 
-    public void parseAndImportTransactions() {
+
+    public void parseAndImportTransactions(int part){
         try {
-            File file = new File("data/transactions.json");
+            String relativePath = "data/transactions.json";
+            File file = new File(relativePath);
+
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
-            ObjectReader reader = mapper.readerFor(Transaction.class);
+            ObjectReader reader = mapper.readerForListOf(Transaction.class);
 
-            List<Transaction> transactions;
-            try (var lines = Files.lines(Paths.get(file.toURI()))) {
-                transactions = lines.map(line -> {
-                    try {
-                        return reader.readValue(line, Transaction.class);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }).toList();
+            List<Transaction> transactions = reader.readValue(file);
+            int size = transactions.size();
+            int mid = size / 2;
+
+            List<Transaction> subList;
+            if (part == 0) {
+                subList = transactions.subList(0, mid);
+            } else {
+                subList = transactions.subList(mid, size);
             }
 
-            transactionRepository.saveAll(transactions);
-            if(!transactions.isEmpty()){
-                logger.info("Imported " + transactions.size() + " transactions.");
+            transactionRepository.saveAll(subList);
+            if(!subList.isEmpty()){
+                logger.info("Imported " + subList.size() + " accounts.");
             }
 
         } catch (Exception e) {
-            BankingSystemException.internalServerError().message(e.getMessage());
+            e.printStackTrace();
         }
     }
 
