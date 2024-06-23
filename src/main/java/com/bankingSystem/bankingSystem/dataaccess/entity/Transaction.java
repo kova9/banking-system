@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -40,5 +41,5 @@ public class Transaction {
     private String message;
 
     @Column
-    private LocalDateTime timestamp;
+    private Timestamp timestamp;
 }

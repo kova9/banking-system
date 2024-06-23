@@ -33,11 +33,12 @@ public class TransactionController {
 
     @GetMapping("/history/{customerId}")
     public ResponseEntity<List<Transaction>> filterTransactions(@PathVariable("customerId") String customerId,
-                                                                @RequestParam(required = false) Timestamp startDate,
-                                                                @RequestParam(required = false) Timestamp endDate,
+                                                                @RequestParam(required = false) String startDate,
+                                                                @RequestParam(required = false) String endDate,
+                                                                @RequestParam(required = false) String currencyId,
                                                                 @RequestParam(required = false) BigDecimal minAmount,
                                                                 @RequestParam(required = false) BigDecimal maxAmount){
-        return provider.filterTransactions(customerId, startDate, endDate, minAmount, maxAmount);
+        return provider.filterTransactions(customerId, startDate, endDate, currencyId, minAmount, maxAmount);
     }
 
 }

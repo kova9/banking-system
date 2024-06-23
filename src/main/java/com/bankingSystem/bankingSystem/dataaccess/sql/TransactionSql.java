@@ -2,6 +2,7 @@ package com.bankingSystem.bankingSystem.dataaccess.sql;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
 import com.bankingSystem.bankingSystem.obj.CommonFields;
+import com.bankingSystem.bankingSystem.obj.SearchDto;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -16,23 +17,15 @@ import java.util.logging.Logger;
 
 public class TransactionSql implements Specification<Transaction> {
 
-    private String accountId;
-    private Timestamp startDate;
-    private Timestamp endDate;
-    private BigDecimal minAmount;
-    private BigDecimal maxAmount;
+    private SearchDto searchDto;
 
-    public TransactionSql(String accountId, Timestamp startDate, Timestamp endDate, BigDecimal minAmount, BigDecimal maxAmount) {
-        this.accountId = accountId;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.minAmount = minAmount;
-        this.maxAmount = maxAmount;
+    public TransactionSql(SearchDto searchDto) {
+        this.searchDto = searchDto;
     }
     @Override
     public Predicate toPredicate(Root<Transaction> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Predicate senderAccount = criteriaBuilder.equal(root.get(CommonFields.SENDER_ACCOUNT_ID), this.accountId);
-        Predicate receiverAccount = criteriaBuilder.equal(root.get(CommonFields.RECEIVER_ACCOUNT_ID), this.accountId);
+        Predicate senderAccount = criteriaBuilder.equal(root.get(CommonFields.SENDER_ACCOUNT_ID), this.searchDto.getSenderId());
+        Predicate receiverAccount = criteriaBuilder.equal(root.get(CommonFields.RECEIVER_ACCOUNT_ID), this.searchDto.getReceiverId());
 
         Predicate orPredicate = criteriaBuilder.or(senderAccount, receiverAccount);
 
@@ -40,22 +33,26 @@ public class TransactionSql implements Specification<Transaction> {
         List<Predicate> allPredicates = new ArrayList<>();
 
 
-        if(this.minAmount != null){
-            Predicate minAmountPred = criteriaBuilder.greaterThanOrEqualTo(root.get(CommonFields.AMOUNT), this.minAmount);
+        if(this.searchDto.getMinAmout() != null){
+            Predicate minAmountPred = criteriaBuilder.greaterThanOrEqualTo(root.get(CommonFields.AMOUNT), this.searchDto.getMinAmout());
             allPredicates.add(minAmountPred);
         }
 
-        if (this.maxAmount != null) {
-            Predicate maxAmountPred = criteriaBuilder.lessThanOrEqualTo(root.get(CommonFields.AMOUNT), this.maxAmount);
+        if (this.searchDto.getMaxAmout() != null) {
+            Predicate maxAmountPred = criteriaBuilder.lessThanOrEqualTo(root.get(CommonFields.AMOUNT), this.searchDto.getMaxAmout());
             allPredicates.add(maxAmountPred);
         }
-        if (this.endDate != null) {
-            Predicate endDatePred = criteriaBuilder.lessThanOrEqualTo(root.get(CommonFields.TIMESTAMP), this.endDate);
+        if (this.searchDto.getEndDate() != null) {
+            Predicate endDatePred = criteriaBuilder.lessThanOrEqualTo(root.get(CommonFields.TIMESTAMP), this.searchDto.getEndDate());
             allPredicates.add(endDatePred);
         }
-        if (this.startDate != null){
-            Predicate startDatePred = criteriaBuilder.greaterThanOrEqualTo(root.get(CommonFields.TIMESTAMP), this.endDate);
+        if (this.searchDto.getStartDate() != null){
+            Predicate startDatePred = criteriaBuilder.greaterThanOrEqualTo(root.get(CommonFields.TIMESTAMP), this.searchDto.getStartDate());
             allPredicates.add(startDatePred);
+        }
+        if (this.searchDto.getCurrencyId() != null){
+            Predicate currencyPred = criteriaBuilder.equal(root.get(CommonFields.CURRENCY_ID), this.searchDto.getCurrencyId());
+            allPredicates.add(currencyPred);
         }
 
         if (!allPredicates.isEmpty()) {

@@ -12,10 +12,8 @@ import com.bankingSystem.bankingSystem.dataaccess.sql.TransactionSql;
 import com.bankingSystem.bankingSystem.enums.AccountId;
 import com.bankingSystem.bankingSystem.enums.CustomerId;
 import com.bankingSystem.bankingSystem.exception.BankingSystemException;
-import com.bankingSystem.bankingSystem.obj.AccountDto;
-import com.bankingSystem.bankingSystem.obj.EmailInfo;
-import com.bankingSystem.bankingSystem.obj.TransactionDto;
-import com.bankingSystem.bankingSystem.obj.TransactionResponse;
+import com.bankingSystem.bankingSystem.obj.*;
+import com.bankingSystem.bankingSystem.util.DateTimeUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +67,7 @@ public class TransactionService {
         return ResponseEntity.ok(transactions);
     }
 
-    public ResponseEntity<List<Transaction>> filterTransactions(String customerId, Timestamp startDate, Timestamp endDate, BigDecimal minAmount, BigDecimal maxAmount) {
+    public ResponseEntity<List<Transaction>> filterTransactions(String customerId, String startDate, String endDate, String currencyId, BigDecimal minAmount, BigDecimal maxAmount) {
 
         CustomerId custId = CustomerId.fromCode(customerId);
         if(custId == null){
@@ -81,10 +80,21 @@ public class TransactionService {
         }
 
         String accountId = customer.get().getAccounts();
+        SearchDto searchDto = new SearchDto();
+        searchDto.setSenderId(accountId);
+        searchDto.setReceiverId(accountId);
+        searchDto.setCurrencyId(currencyId);
+        if(startDate != null){
+            searchDto.setStartDate(DateTimeUtil.stringToTimestamp(startDate));
+        }
+        if(endDate != null){
+            searchDto.setEndDate(DateTimeUtil.stringToTimestamp(endDate));
+        }
+        searchDto.setMinAmout(minAmount);
+        searchDto.setMaxAmout(maxAmount);
 
-        Specification<Transaction> specification = new TransactionSql(accountId, startDate, endDate, minAmount, maxAmount);
+        Specification<Transaction> specification = new TransactionSql(searchDto);
         List<Transaction> transactions = transactionRepository.findAll(specification);
-
 
         return ResponseEntity.ok(transactions);
     }

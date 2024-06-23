@@ -5,6 +5,7 @@ import com.bankingSystem.bankingSystem.enums.AccountId;
 import com.bankingSystem.bankingSystem.obj.TransactionDto;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ public class TransactionLogic {
         transaction.setCurrencyId(dto.getCurrencyId());
         transaction.setSenderAccountId(AccountId.fromCode(dto.getSenderAccountId()).getAccount());
         transaction.setReceiverAccountId(AccountId.fromCode(dto.getReceiverAccountId()).getAccount());
-        transaction.setTimestamp(LocalDateTime.now());
+        transaction.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
 
         return transaction;
     }
