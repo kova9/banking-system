@@ -9,8 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Entity
 @Data
 @Builder
@@ -36,5 +34,5 @@ public class Customer {
     private String phoneNumber;
 
     @Column
-    private String accounts;
+    private String account;
 }

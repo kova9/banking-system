@@ -8,8 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ScheduledJob {
-    @Autowired
-    private AccountService accountService;
+    private final AccountService accountService;
+
+    public ScheduledJob(AccountService accountService){
+        this.accountService = accountService;
+    }
 
     @Scheduled(cron = Expressions.ONCE_A_MONTH)
     public void calculateMonthlyTurnovers(){

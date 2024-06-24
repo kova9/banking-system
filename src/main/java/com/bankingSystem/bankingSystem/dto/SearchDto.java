@@ -12,11 +12,12 @@ public class SearchDto {
     private String receiverId;
     private String senderId;
     private String message;
-    private BigDecimal minAmout;
-    private BigDecimal maxAmout;
+    private BigDecimal minAmount;
+    private BigDecimal maxAmount;
     private String currencyId;
     private Timestamp startDate;
     private Timestamp endDate;
+    private boolean senderAndReceiverSame;
 
     public static SearchDto fromJson(JsonNode json) {
         if (json != null) {

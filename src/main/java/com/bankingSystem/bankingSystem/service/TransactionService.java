@@ -15,7 +15,8 @@ import com.bankingSystem.bankingSystem.dto.TransactionDto;
 import com.bankingSystem.bankingSystem.enums.AccountId;
 import com.bankingSystem.bankingSystem.enums.CustomerId;
 import com.bankingSystem.bankingSystem.exception.BankingSystemException;
-import com.bankingSystem.bankingSystem.obj.*;
+import com.bankingSystem.bankingSystem.obj.EmailInfo;
+import com.bankingSystem.bankingSystem.obj.TransactionResponse;
 import com.bankingSystem.bankingSystem.util.DateTimeUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +43,6 @@ public class TransactionService {
     private final AccountLogic accountLogic;
     private final TransactionLogic transactionLogic;
 
-    // Constructor Injection
     public TransactionService(TransactionRepository transactionRepository, CustomerRepository customerRepository,
                               AccountRepository accountRepository, EmailSenderService emailSenderService,
                               AccountLogic accountLogic, TransactionLogic transactionLogic){
@@ -81,14 +79,15 @@ public class TransactionService {
             throw BankingSystemException.notFound().message(ERROR_ACCOUNT_NOT_FOUND).build();
         }
 
-        String accountId = customer.get().getAccounts();
+        String accountId = customer.get().getAccount();
         SearchDto searchDto = new SearchDto();
 
         searchDto.setSenderId(accountId);
         searchDto.setReceiverId(accountId);
         searchDto.setCurrencyId(currencyId);
-        searchDto.setMinAmout(minAmount);
-        searchDto.setMaxAmout(maxAmount);
+        searchDto.setMinAmount(minAmount);
+        searchDto.setMaxAmount(maxAmount);
+        searchDto.setSenderAndReceiverSame(true);
         try{
             if(startDate != null){
                 searchDto.setStartDate(DateTimeUtil.stringToTimestamp(startDate));
@@ -127,8 +126,12 @@ public class TransactionService {
         Optional<Account> senderAccount = accountRepository.findById(transaction.getSenderAccountId());
         Optional<Account> receiverAccount = accountRepository.findById(transaction.getReceiverAccountId());
 
-        updateAccounts(senderAccount, transaction, false);
-        updateAccounts(receiverAccount, transaction, true);
+        if(senderAccount.isEmpty() || receiverAccount.isEmpty()){
+            throw BankingSystemException.notFound().message(ERROR_ACCOUNT_NOT_FOUND).build();
+        }
+
+        updateAccount(senderAccount, transaction, false);
+        updateAccount(receiverAccount, transaction, true);
 
         EmailInfo senderInfo = createEmailInfo(transaction, senderAccount, false);
         EmailInfo receiverInfo = createEmailInfo(transaction, receiverAccount, true);
@@ -140,7 +143,7 @@ public class TransactionService {
         emailSenderService.sendMail(receiverMail, receiverInfo);
     }
 
-    private void updateAccounts(Optional<Account> account, Transaction transaction, boolean isReceiver){
+    private void updateAccount(Optional<Account> account, Transaction transaction, boolean isReceiver){
         AccountDto dto = account.get().toDto();
 
         if(isReceiver){

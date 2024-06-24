@@ -51,6 +51,7 @@ public class AccountService {
         searchDto.setSenderId(account.getAccountId());
         searchDto.setStartDate(startDate);
         searchDto.setEndDate(endDate);
+        searchDto.setSenderAndReceiverSame(true);
 
         Specification<Transaction> specification = new TransactionSql(searchDto);
         List<Transaction> transactions = transactionRepository.findAll(specification);
