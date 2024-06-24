@@ -8,7 +8,8 @@
        an CustomerId Enum, so while testing you can use Id's 1-10.
     4. The Email used for the Mailing service is an test Address created for this project, so there is no need for 
        any kind of configuration. 
-    5. 100 000 transactions will get imported at the start of the server, aswell as 10 Customers and 10 accounts.
+    5. If you want to receive a mail, just edit the e-mail address in the customers.json file
+    6. 100 000 transactions will get imported at the start of the server, aswell as 10 Customers and 10 accounts.
     
  <br>
  <br>
