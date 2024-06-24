@@ -1,9 +1,6 @@
 package com.bankingSystem.bankingSystem.dataaccess.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +30,7 @@ public class Customer {
     @Column
     private String phoneNumber;
 
-    @Column
-    private String account;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id", referencedColumnName = "accountId")
+    private Account account;
 }

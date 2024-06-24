@@ -1,12 +1,9 @@
 package com.bankingSystem.bankingSystem.config;
 
-import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
-import com.bankingSystem.bankingSystem.dataaccess.repository.AccountRepository;
 import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
 import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionRepository;
-import com.bankingSystem.bankingSystem.exception.BankingSystemException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -15,8 +12,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,12 +22,10 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
 
     private final TransactionRepository transactionRepository;
     private final CustomerRepository customerRepository;
-    private final AccountRepository accountRepository;
 
-    public StartupApplicationListener(TransactionRepository transactionRepository, CustomerRepository customerRepository, AccountRepository accountRepository){
+    public StartupApplicationListener(TransactionRepository transactionRepository, CustomerRepository customerRepository){
         this.transactionRepository = transactionRepository;
         this.customerRepository = customerRepository;
-        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -41,10 +34,7 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
 
         executorService.submit(this::parseAndImportTransactionsFirstHalf);
         executorService.submit(this::parseAndImportTransactionsSecondHalf);
-        executorService.submit(() -> {
-            parseAndImportAccounts();
-            parseAndImportCustomers();
-        });
+        executorService.submit(this::parseAndImportCustomers);
 
         executorService.shutdown();
     }
@@ -83,26 +73,6 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
             transactionRepository.saveAll(subList);
             if(!subList.isEmpty()){
                 logger.info("Imported " + subList.size() + " accounts.");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void parseAndImportAccounts(){
-        try {
-            String relativePath = "data/accounts.json";
-            File file = new File(relativePath);
-
-            ObjectMapper mapper = new ObjectMapper();
-            ObjectReader reader = mapper.readerForListOf(Account.class);
-
-            List<Account> accounts = reader.readValue(file);
-
-            accountRepository.saveAll(accounts);
-            if(!accounts.isEmpty()){
-                logger.info("Imported " + accounts.size() + " accounts.");
             }
 
         } catch (Exception e) {

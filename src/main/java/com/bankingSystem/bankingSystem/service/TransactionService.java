@@ -77,7 +77,7 @@ public class TransactionService {
             throw BankingSystemException.notFound().message(ERROR_ACCOUNT_NOT_FOUND).build();
         }
 
-        String accountId = customer.get().getAccount();
+        String accountId = customer.get().getAccount().getAccountId();
         SearchDto searchDto = new SearchDto();
 
         searchDto.setSenderId(accountId);

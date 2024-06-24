@@ -25,7 +25,7 @@ public class TransactionController {
         return provider.saveTransaction(in);
     }
 
-    @GetMapping("/transaction/all")
+    @GetMapping("/all")
     public ResponseEntity<List<Transaction>> getAllTransactions(){
         return provider.getAllTransactions();
     }
