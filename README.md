@@ -12,6 +12,14 @@
     6. 100 000 transactions will get imported at the start of the server, aswell as 10 Customers and 10 accounts.
     
  <br>
+Example of an /transaction/ request to save new transactions
+{
+    "senderAccountId":"4",
+    "receiverAccountId":"10",
+    "amount":100000,
+    "currencyId":"EUR",
+    "message":"testMessage"
+}
  <br>
 
 #### There is no need for external software.
