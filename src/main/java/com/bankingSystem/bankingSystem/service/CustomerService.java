@@ -2,9 +2,8 @@ package com.bankingSystem.bankingSystem.service;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
+import com.bankingSystem.bankingSystem.enums.CustomerId;
 import com.bankingSystem.bankingSystem.exception.BankingSystemException;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,6 @@ import static com.bankingSystem.bankingSystem.exception.ExceptionMessages.ERROR_
 import static com.bankingSystem.bankingSystem.exception.ExceptionMessages.ERROR_NO_AVAILABLE_CUSTOMERS;
 
 @Service
-@Slf4j
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
@@ -35,8 +33,12 @@ public class CustomerService {
     }
 
     public ResponseEntity<Customer> findById(String id){
-        Optional<Customer> customer = customerRepository.findById(id);
+        CustomerId customerEnum = CustomerId.fromCode(id);
+        if(customerEnum == null){
+            throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
+        }
 
+        Optional<Customer> customer = customerRepository.findById(customerEnum.getAccount());
         if(customer.isEmpty()){
             throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
         }

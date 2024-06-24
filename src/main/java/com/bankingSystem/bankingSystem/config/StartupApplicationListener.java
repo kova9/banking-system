@@ -37,9 +37,8 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        ExecutorService executorService = Executors.newFixedThreadPool(3); // 3 threads
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
 
-        // Submit tasks for parallel execution
         executorService.submit(this::parseAndImportTransactionsFirstHalf);
         executorService.submit(this::parseAndImportTransactionsSecondHalf);
         executorService.submit(() -> {
@@ -47,7 +46,6 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
             parseAndImportCustomers();
         });
 
-        // Shutdown the executor service
         executorService.shutdown();
     }
 

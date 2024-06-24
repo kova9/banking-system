@@ -1,4 +1,4 @@
-package com.bankingSystem.bankingSystem.obj;
+package com.bankingSystem.bankingSystem.dto;
 
 import lombok.Data;
 

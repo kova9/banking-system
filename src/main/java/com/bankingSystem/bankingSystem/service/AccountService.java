@@ -6,7 +6,6 @@ import com.bankingSystem.bankingSystem.dataaccess.repository.AccountRepository;
 import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionRepository;
 import com.bankingSystem.bankingSystem.dataaccess.sql.TransactionSql;
 import com.bankingSystem.bankingSystem.dto.SearchDto;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import java.util.List;
 
 
 @Service
-@Slf4j
 public class AccountService {
 
     private final AccountRepository accountRepository;

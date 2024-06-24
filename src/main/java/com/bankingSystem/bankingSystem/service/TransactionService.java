@@ -15,11 +15,10 @@ import com.bankingSystem.bankingSystem.dto.TransactionDto;
 import com.bankingSystem.bankingSystem.enums.AccountId;
 import com.bankingSystem.bankingSystem.enums.CustomerId;
 import com.bankingSystem.bankingSystem.exception.BankingSystemException;
-import com.bankingSystem.bankingSystem.obj.EmailInfo;
+import com.bankingSystem.bankingSystem.dto.EmailInfo;
 import com.bankingSystem.bankingSystem.obj.TransactionResponse;
 import com.bankingSystem.bankingSystem.util.DateTimeUtil;
 import com.fasterxml.jackson.databind.JsonNode;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +32,6 @@ import java.util.Optional;
 import static com.bankingSystem.bankingSystem.exception.ExceptionMessages.*;
 
 @Service
-@Slf4j
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;

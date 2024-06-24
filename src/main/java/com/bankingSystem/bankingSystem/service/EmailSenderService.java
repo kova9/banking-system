@@ -2,7 +2,7 @@ package com.bankingSystem.bankingSystem.service;
 
 import com.bankingSystem.bankingSystem.enums.EmailMessage;
 import com.bankingSystem.bankingSystem.obj.EmailFields;
-import com.bankingSystem.bankingSystem.obj.EmailInfo;
+import com.bankingSystem.bankingSystem.dto.EmailInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
