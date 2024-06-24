@@ -9,6 +9,9 @@ import com.bankingSystem.bankingSystem.dataaccess.repository.AccountRepository;
 import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
 import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionRepository;
 import com.bankingSystem.bankingSystem.dataaccess.sql.TransactionSql;
+import com.bankingSystem.bankingSystem.dto.AccountDto;
+import com.bankingSystem.bankingSystem.dto.SearchDto;
+import com.bankingSystem.bankingSystem.dto.TransactionDto;
 import com.bankingSystem.bankingSystem.enums.AccountId;
 import com.bankingSystem.bankingSystem.enums.CustomerId;
 import com.bankingSystem.bankingSystem.exception.BankingSystemException;
@@ -23,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -68,30 +71,34 @@ public class TransactionService {
     }
 
     public ResponseEntity<List<Transaction>> filterTransactions(String customerId, String startDate, String endDate, String currencyId, BigDecimal minAmount, BigDecimal maxAmount) {
-
-        CustomerId custId = CustomerId.fromCode(customerId);
-        if(custId == null){
+        CustomerId customerEnum = CustomerId.fromCode(customerId);
+        if(customerEnum == null){
             throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
         }
 
-        Optional<Customer> customer = customerRepository.findById(custId.getAccount());
+        Optional<Customer> customer = customerRepository.findById(customerEnum.getAccount());
         if(customer.isEmpty()){
             throw BankingSystemException.notFound().message(ERROR_ACCOUNT_NOT_FOUND).build();
         }
 
         String accountId = customer.get().getAccounts();
         SearchDto searchDto = new SearchDto();
+
         searchDto.setSenderId(accountId);
         searchDto.setReceiverId(accountId);
         searchDto.setCurrencyId(currencyId);
-        if(startDate != null){
-            searchDto.setStartDate(DateTimeUtil.stringToTimestamp(startDate));
-        }
-        if(endDate != null){
-            searchDto.setEndDate(DateTimeUtil.stringToTimestamp(endDate));
-        }
         searchDto.setMinAmout(minAmount);
         searchDto.setMaxAmout(maxAmount);
+        try{
+            if(startDate != null){
+                searchDto.setStartDate(DateTimeUtil.stringToTimestamp(startDate));
+            }
+            if(endDate != null){
+                searchDto.setEndDate(DateTimeUtil.stringToTimestamp(endDate));
+            }
+        }catch (IllegalArgumentException e){
+            throw BankingSystemException.badRequest().message(ERROR_INVALID_DATE).build();
+        }
 
         Specification<Transaction> specification = new TransactionSql(searchDto);
         List<Transaction> transactions = transactionRepository.findAll(specification);

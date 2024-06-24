@@ -1,6 +1,6 @@
-package com.bankingSystem.bankingSystem.dataaccess.job;
+package com.bankingSystem.bankingSystem.job;
 
-import com.bankingSystem.bankingSystem.dataaccess.job.common.Expressions;
+import com.bankingSystem.bankingSystem.job.common.Expressions;
 import com.bankingSystem.bankingSystem.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

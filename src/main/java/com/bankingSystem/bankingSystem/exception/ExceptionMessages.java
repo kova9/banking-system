@@ -7,4 +7,5 @@ public class ExceptionMessages {
     public static final String ERROR_REQUEST_DATA_NOT_COMPLETE = "Request data not complete";
     public static final String ERROR_NO_AVAILABLE_TRANSACTIONS = "No transactions available";
     public static final String ERROR_NO_AVAILABLE_CUSTOMERS = "No available customers";
+    public static final String ERROR_INVALID_DATE = "Invalid date";
 }

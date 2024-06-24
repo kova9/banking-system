@@ -2,7 +2,7 @@ package com.bankingSystem.bankingSystem.dataaccess.logic;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
 import com.bankingSystem.bankingSystem.enums.AccountId;
-import com.bankingSystem.bankingSystem.obj.TransactionDto;
+import com.bankingSystem.bankingSystem.dto.TransactionDto;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;

@@ -2,18 +2,15 @@ package com.bankingSystem.bankingSystem.dataaccess.sql;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
 import com.bankingSystem.bankingSystem.obj.CommonFields;
-import com.bankingSystem.bankingSystem.obj.SearchDto;
+import com.bankingSystem.bankingSystem.dto.SearchDto;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class TransactionSql implements Specification<Transaction> {
 

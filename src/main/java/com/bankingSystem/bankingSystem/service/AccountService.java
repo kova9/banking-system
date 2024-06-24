@@ -5,15 +5,13 @@ import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
 import com.bankingSystem.bankingSystem.dataaccess.repository.AccountRepository;
 import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionRepository;
 import com.bankingSystem.bankingSystem.dataaccess.sql.TransactionSql;
-import com.bankingSystem.bankingSystem.obj.SearchDto;
+import com.bankingSystem.bankingSystem.dto.SearchDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

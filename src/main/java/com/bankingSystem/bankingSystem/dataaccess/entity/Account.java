@@ -1,6 +1,6 @@
 package com.bankingSystem.bankingSystem.dataaccess.entity;
 
-import com.bankingSystem.bankingSystem.obj.AccountDto;
+import com.bankingSystem.bankingSystem.dto.AccountDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

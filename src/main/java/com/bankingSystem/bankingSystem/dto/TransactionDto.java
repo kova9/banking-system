@@ -1,4 +1,4 @@
-package com.bankingSystem.bankingSystem.obj;
+package com.bankingSystem.bankingSystem.dto;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;

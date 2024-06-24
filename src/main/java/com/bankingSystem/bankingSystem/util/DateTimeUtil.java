@@ -8,38 +8,39 @@ import java.time.format.DateTimeParseException;
 
 public class DateTimeUtil {
 
-    private static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
-    private static final String DEFAULT_DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
+    private DateTimeUtil() {
+        throw new UnsupportedOperationException();
+    }
 
-    public static Timestamp stringToTimestamp(String dateTimeString) {
+    private static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
+
+    public static Timestamp stringToTimestamp(String dateString) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DEFAULT_DATE_PATTERN);
         try {
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_PATTERN);
-            LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, dateTimeFormatter);
-            return Timestamp.valueOf(localDateTime);
-        } catch (DateTimeParseException e) {
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DEFAULT_DATE_PATTERN);
-            LocalDate localDate = LocalDate.parse(dateTimeString, dateFormatter);
+            LocalDate localDate = LocalDate.parse(dateString, dateFormatter);
             return Timestamp.valueOf(localDate.atStartOfDay());
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException();
         }
     }
 
-    public static Timestamp stringToTimestamp(String dateTimeString, String pattern) {
+    public static Timestamp stringToTimestamp(String dateString, String pattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         try {
-            LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, formatter);
-            return Timestamp.valueOf(localDateTime);
+            LocalDate localDate = LocalDate.parse(dateString, formatter);
+            return Timestamp.valueOf(localDate.atStartOfDay());
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid date-time format: " + e.getMessage(), e);
+            throw new IllegalArgumentException();
         }
     }
 
     public static String timestampToString(Timestamp timestamp) {
-        return timestampToString(timestamp, DEFAULT_DATE_TIME_PATTERN);
+        return timestampToString(timestamp, DEFAULT_DATE_PATTERN);
     }
 
     public static String timestampToString(Timestamp timestamp, String pattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-        LocalDateTime localDateTime = timestamp.toLocalDateTime();
-        return localDateTime.format(formatter);
+        LocalDate localDate = timestamp.toLocalDateTime().toLocalDate();
+        return localDate.format(formatter);
     }
 }
