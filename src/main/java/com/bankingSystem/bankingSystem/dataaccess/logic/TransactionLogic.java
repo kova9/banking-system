@@ -14,16 +14,31 @@ public class TransactionLogic {
 
     public Transaction create(TransactionDto dto){
         Transaction transaction = new Transaction();
+        String senderAccount = getAccountId(dto.getSenderAccountId());
+        String receiverAccount = getAccountId(dto.getReceiverAccountId());
 
         transaction.setTransactionId(UUID.randomUUID().toString());
         transaction.setAmount(dto.getAmount());
         transaction.setMessage(dto.getMessage());
         transaction.setCurrencyId(dto.getCurrencyId());
-        transaction.setSenderAccountId(AccountId.fromCode(dto.getSenderAccountId()).getAccount());
-        transaction.setReceiverAccountId(AccountId.fromCode(dto.getReceiverAccountId()).getAccount());
+        transaction.setSenderAccountId(senderAccount);
+        transaction.setReceiverAccountId(receiverAccount);
         transaction.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
         transaction.setStorno(false);
 
         return transaction;
     }
+
+    private String getAccountId(String accountId){
+        AccountId accountEnum = AccountId.fromCode(accountId);
+        String account;
+        if(accountEnum == null){
+            account = accountId;
+        }else{
+            account = accountEnum.getAccount();
+        }
+
+        return account;
+    }
+
 }
