@@ -13,22 +13,22 @@ import java.util.List;
 @RequestMapping("/customer")
 public class CustomerController {
 
-   private final CustomerService provider;
+   private final CustomerService customerService;
    private final AccountService accountService;
 
-   public CustomerController(CustomerService provider, AccountService accountService){
-      this.provider = provider;
+   public CustomerController(CustomerService customerService, AccountService accountService){
+      this.customerService = customerService;
       this.accountService = accountService;
    }
 
    @GetMapping("/")
    public ResponseEntity<List<Customer>> getAllCustomers(){
-      return provider.getAllCustomers();
+      return customerService.getAllCustomers();
    }
 
    @GetMapping("/{id}")
    public ResponseEntity<Customer> getCustomerById(@PathVariable("id") String id){
-      return provider.findById(id);
+      return customerService.findById(id);
    }
 
    @PostMapping("/turnover")

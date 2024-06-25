@@ -14,20 +14,20 @@ import java.util.List;
 @RequestMapping("/transaction")
 public class TransactionController {
 
-    private final TransactionService provider;
+    private final TransactionService transactionService;
 
     public TransactionController(TransactionService provider){
-        this.provider = provider;
+        this.transactionService = provider;
     }
 
     @PostMapping("/")
     public ResponseEntity<TransactionResponse> saveTransaction(@RequestBody JsonNode in){
-        return provider.saveTransaction(in);
+        return transactionService.saveTransaction(in);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Transaction>> getAllTransactions(){
-        return provider.getAllTransactions();
+        return transactionService.getAllTransactions();
     }
 
     @GetMapping("/history/{customerId}")
@@ -38,7 +38,7 @@ public class TransactionController {
                                                                 @RequestParam(required = false) BigDecimal minAmount,
                                                                 @RequestParam(required = false) BigDecimal maxAmount,
                                                                 @RequestParam(required = false) String message){
-        return provider.filterTransactions(customerId, startDate, endDate, currencyId, minAmount, maxAmount, message);
+        return transactionService.filterTransactions(customerId, startDate, endDate, currencyId, minAmount, maxAmount, message);
     }
 
 }
