@@ -53,7 +53,7 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
 
     public void parseAndImportTransactions(int part){
         try {
-            String relativePath = "data/transactions_multiple.json";
+            String relativePath = "data/transactions_multiple_two.json";
             File file = new File(relativePath);
 
             ObjectMapper mapper = new ObjectMapper();
