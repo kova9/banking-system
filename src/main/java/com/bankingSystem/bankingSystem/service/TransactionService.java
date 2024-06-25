@@ -217,6 +217,9 @@ public class TransactionService {
             throw BankingSystemException.notFound().message(ERROR_ACCOUNT_NOT_FOUND).build();
         }
 
+        TransactionDto transactionDto = transaction.get().toDto();
+        transactionLogic.update(transaction.get(), transactionDto);
+
         reverseTransactions(senderAccount, transaction, false);
         reverseTransactions(receiverAccount, transaction, false);
 

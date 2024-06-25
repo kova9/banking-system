@@ -29,6 +29,17 @@ public class TransactionLogic {
         return transaction;
     }
 
+    public Transaction update(Transaction oldTransaction, TransactionDto dto){
+        oldTransaction.setAmount(dto.getAmount());
+        oldTransaction.setMessage(dto.getMessage());
+        oldTransaction.setCurrencyId(dto.getCurrencyId());
+        oldTransaction.setSenderAccountId(dto.getSenderAccountId());
+        oldTransaction.setReceiverAccountId(dto.getReceiverAccountId());
+        oldTransaction.setStorno(dto.isStorno());
+
+        return oldTransaction;
+    }
+
     private String getAccountId(String accountId){
         AccountId accountEnum = AccountId.fromCode(accountId);
         String account;

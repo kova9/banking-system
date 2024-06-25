@@ -1,5 +1,6 @@
 package com.bankingSystem.bankingSystem.dataaccess.entity;
 
+import com.bankingSystem.bankingSystem.dto.TransactionDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -44,4 +45,17 @@ public class Transaction {
 
     @Column
     private boolean storno;
+
+    public TransactionDto toDto(){
+        TransactionDto dto = new TransactionDto();
+
+        dto.setAmount(getAmount());
+        dto.setReceiverAccountId(getReceiverAccountId());
+        dto.setSenderAccountId(getTransactionId());
+        dto.setCurrencyId(getCurrencyId());
+        dto.setMessage(getMessage());
+        dto.setStorno(isStorno());
+
+        return dto;
+    }
 }

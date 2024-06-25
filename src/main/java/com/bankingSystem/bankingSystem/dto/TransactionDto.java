@@ -19,6 +19,8 @@ public class TransactionDto {
 
     private String message;
 
+    private boolean storno;
+
     public static TransactionDto fromJson(JsonNode json) {
         if (json != null) {
             return new Gson().fromJson(json.toString(), TransactionDto.class);
