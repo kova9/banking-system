@@ -37,7 +37,7 @@ public class CustomerController {
       return accountService.getTurnovers();
    }
 
-   @PostMapping("/create")
+   @PostMapping("/")
    public ResponseEntity<Customer> createCustomer(@RequestBody JsonNode in){
       return customerService.createCustomer(in);
    }
