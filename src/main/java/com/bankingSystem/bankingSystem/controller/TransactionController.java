@@ -37,8 +37,15 @@ public class TransactionController {
                                                                 @RequestParam(required = false) String currencyId,
                                                                 @RequestParam(required = false) BigDecimal minAmount,
                                                                 @RequestParam(required = false) BigDecimal maxAmount,
-                                                                @RequestParam(required = false) String message){
-        return provider.filterTransactions(customerId, startDate, endDate, currencyId, minAmount, maxAmount, message);
+                                                                @RequestParam(required = false) String message,
+                                                                @RequestParam(required = false) boolean storno)
+                                                                {
+        return provider.filterTransactions(customerId, startDate, endDate, currencyId, minAmount, maxAmount, message, storno);
+    }
+
+    @PostMapping("/storno/{id}")
+    public ResponseEntity<TransactionResponse> stornateTransaction(@PathVariable("id") String id){
+        return provider.stornateTransaction(id);
     }
 
 }

@@ -62,6 +62,14 @@ public class TransactionSql implements Specification<Transaction> {
             Predicate messagePred = criteriaBuilder.equal(root.get(CommonFields.MESSAGE), this.searchDto.getMessage());
             allPredicates.add(messagePred);
         }
+        if (this.searchDto.isStorno()){
+            Predicate stornoTruePred = criteriaBuilder.equal(root.get(CommonFields.STORNO), this.searchDto.isStorno());
+            allPredicates.add(stornoTruePred);
+        }
+        if (!this.searchDto.isStorno()){
+            Predicate stornoFalsePred = criteriaBuilder.equal(root.get(CommonFields.STORNO), this.searchDto.isStorno());
+            allPredicates.add(stornoFalsePred);
+        }
 
         if (this.searchDto.isSenderAndReceiverSame()) {
             Predicate senderAccount = criteriaBuilder.equal(root.get(CommonFields.SENDER_ACCOUNT_ID), this.searchDto.getSenderId());

@@ -22,6 +22,7 @@ public class TransactionLogic {
         transaction.setSenderAccountId(AccountId.fromCode(dto.getSenderAccountId()).getAccount());
         transaction.setReceiverAccountId(AccountId.fromCode(dto.getReceiverAccountId()).getAccount());
         transaction.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+        transaction.setStorno(false);
 
         return transaction;
     }

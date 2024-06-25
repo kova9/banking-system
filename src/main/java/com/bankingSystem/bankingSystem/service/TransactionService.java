@@ -66,7 +66,7 @@ public class TransactionService {
         return ResponseEntity.ok(transactions);
     }
 
-    public ResponseEntity<List<Transaction>> filterTransactions(String customerId, String startDate, String endDate, String currencyId, BigDecimal minAmount, BigDecimal maxAmount, String message) {
+    public ResponseEntity<List<Transaction>> filterTransactions(String customerId, String startDate, String endDate, String currencyId, BigDecimal minAmount, BigDecimal maxAmount, String message, boolean storno) {
         CustomerId customerEnum = CustomerId.fromCode(customerId);
         if(customerEnum == null){
             throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
@@ -87,6 +87,7 @@ public class TransactionService {
         searchDto.setMaxAmount(maxAmount);
         searchDto.setSenderAndReceiverSame(true);
         searchDto.setMessage(message);
+        searchDto.setStorno(storno);
         try{
             if(startDate != null){
                 searchDto.setStartDate(DateTimeUtil.stringToTimestamp(startDate));
@@ -198,5 +199,39 @@ public class TransactionService {
         emailInfo.setCurrency(newTransaction.getCurrencyId());
 
         return emailInfo;
+    }
+
+    public ResponseEntity<TransactionResponse> stornateTransaction(String id) {
+        Optional<Transaction> transaction = transactionRepository.findById(id);
+        if(transaction.isEmpty()){
+            throw BankingSystemException.notFound().message(ERROR_TRANSACTION_DOESNT_EXIST).build();
+        }
+
+        Optional<Account> senderAccount = accountRepository.findById(transaction.get().getSenderAccountId());
+        Optional<Account> receiverAccount = accountRepository.findById(transaction.get().getReceiverAccountId());
+
+        if(senderAccount.isEmpty() || receiverAccount.isEmpty()){
+            throw BankingSystemException.notFound().message(ERROR_ACCOUNT_NOT_FOUND).build();
+        }
+
+        reverseTransactions(senderAccount, transaction, false);
+        reverseTransactions(receiverAccount, transaction, false);
+
+        TransactionResponse response = new TransactionResponse();
+        response.setTransactionId(transaction.get().getTransactionId());
+
+        return ResponseEntity.ok(response);
+    }
+
+    private void reverseTransactions(Optional<Account> account, Optional<Transaction> transaction, boolean isReceiver){
+        AccountDto dto = account.get().toDto();
+        if(!isReceiver){
+            dto.setBalance(account.get().getBalance().add(transaction.get().getAmount()));
+        }else{
+            dto.setBalance(account.get().getBalance().subtract(transaction.get().getAmount()));
+        }
+
+        Optional<Account> updatedAccount = accountLogic.update(account, dto);
+        accountRepository.save(updatedAccount.get());
     }
 }
