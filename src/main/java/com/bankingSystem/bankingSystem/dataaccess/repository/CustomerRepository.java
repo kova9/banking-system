@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, String> {
-    @Query("SELECT c FROM Customer c WHERE c.account.accountId = :accountId")
+    @Query("SELECT c FROM Customer c JOIN c.accounts a WHERE a.accountId = :accountId")
     Customer findByAccountId(@Param("accountId") String accountId);
 
     @Query("SELECT c FROM Customer c WHERE c.email = :email")

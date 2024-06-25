@@ -45,8 +45,8 @@ public class AccountService {
 
     private BigDecimal calculateTurnover(Account account, Timestamp startDate, Timestamp endDate){
         SearchDto searchDto = new SearchDto();
-        searchDto.setReceiverId(account.getAccountId());
-        searchDto.setSenderId(account.getAccountId());
+        searchDto.getReceiverId().add(account.getAccountId());
+        searchDto.getSenderId().add(account.getAccountId());
         searchDto.setStartDate(startDate);
         searchDto.setEndDate(endDate);
         searchDto.setSenderAndReceiverSame(true);

@@ -1,5 +1,6 @@
 package com.bankingSystem.bankingSystem.config;
 
+import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
 import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
@@ -52,7 +53,7 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
 
     public void parseAndImportTransactions(int part){
         try {
-            String relativePath = "data/transactions.json";
+            String relativePath = "data/transactions_multiple.json";
             File file = new File(relativePath);
 
             ObjectMapper mapper = new ObjectMapper();
@@ -90,14 +91,23 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
 
             List<Customer> customers = reader.readValue(file);
 
+            // Set customer reference in each account
+            for (Customer customer : customers) {
+                for (Account account : customer.getAccounts()) {
+                    account.setCustomer(customer);
+                }
+            }
+
             customerRepository.saveAll(customers);
-            if(!customers.isEmpty()){
+
+            if (!customers.isEmpty()) {
                 logger.info("Imported " + customers.size() + " customers.");
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.info("Error importing customers: ");
         }
     }
 }
+
 

@@ -1,10 +1,7 @@
 package com.bankingSystem.bankingSystem.dataaccess.entity;
 
 import com.bankingSystem.bankingSystem.dto.AccountDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +32,10 @@ public class Account {
 
     @Column
     private BigDecimal pastMonthTurnover;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
+    private Customer customer;
 
     public AccountDto toDto(){
         AccountDto dto = new AccountDto();

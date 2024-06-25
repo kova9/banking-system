@@ -78,11 +78,13 @@ public class TransactionService {
             throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
         }
 
-        String accountId = customer.get().getAccount().getAccountId();
+//        String accountId = customer.get().getAccount().getAccountId();
+        List<String> accountIds = new ArrayList<>();
+        customer.get().getAccounts().forEach(acc -> accountIds.add(acc.getAccountId()));
         SearchDto searchDto = new SearchDto();
 
-        searchDto.setSenderId(accountId);
-        searchDto.setReceiverId(accountId);
+        searchDto.setSenderId(accountIds);
+        searchDto.setReceiverId(accountIds);
         searchDto.setCurrencyId(currencyId);
         searchDto.setMinAmount(minAmount);
         searchDto.setMaxAmount(maxAmount);

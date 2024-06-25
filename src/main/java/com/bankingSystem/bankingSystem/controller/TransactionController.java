@@ -38,7 +38,7 @@ public class TransactionController {
                                                                 @RequestParam(required = false) BigDecimal minAmount,
                                                                 @RequestParam(required = false) BigDecimal maxAmount,
                                                                 @RequestParam(required = false) String message,
-                                                                @RequestParam(required = false) Boolean storno)
+                                                                @RequestParam(required = false) boolean storno)
                                                                 {
         return transactionService.filterTransactions(customerId, startDate, endDate, currencyId, minAmount, maxAmount, message, storno);
     }
