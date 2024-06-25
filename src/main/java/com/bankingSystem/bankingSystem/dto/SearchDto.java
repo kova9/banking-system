@@ -18,6 +18,7 @@ public class SearchDto {
     private Timestamp startDate;
     private Timestamp endDate;
     private boolean senderAndReceiverSame;
+    private boolean storno;
 
     public static SearchDto fromJson(JsonNode json) {
         if (json != null) {

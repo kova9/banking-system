@@ -24,6 +24,7 @@ public class TransactionLogic {
         transaction.setSenderAccountId(senderAccount);
         transaction.setReceiverAccountId(receiverAccount);
         transaction.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+        transaction.setStorno(false);
 
         return transaction;
     }

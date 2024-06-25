@@ -41,4 +41,7 @@ public class Transaction {
 
     @Column
     private Timestamp timestamp;
+
+    @Column
+    private boolean storno;
 }

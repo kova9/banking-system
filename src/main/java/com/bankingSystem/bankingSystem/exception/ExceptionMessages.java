@@ -8,5 +8,6 @@ public class ExceptionMessages {
     public static final String ERROR_NO_AVAILABLE_TRANSACTIONS = "No transactions available";
     public static final String ERROR_NO_AVAILABLE_CUSTOMERS = "No available customers";
     public static final String ERROR_INVALID_DATE = "Invalid date";
+    public static final String ERROR_TRANSACTION_DOESNT_EXIST = "Transaction doesn't exist";
     public static final String ERROR_EMAIL_ALREADY_TAKEN = "Email is already taken";
 }
