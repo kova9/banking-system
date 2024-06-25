@@ -68,13 +68,14 @@ public class TransactionService {
 
     public ResponseEntity<List<Transaction>> filterTransactions(String customerId, String startDate, String endDate, String currencyId, BigDecimal minAmount, BigDecimal maxAmount, String message) {
         CustomerId customerEnum = CustomerId.fromCode(customerId);
+        Optional<Customer> customer;
         if(customerEnum == null){
-            throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
+            customer = customerRepository.findById(customerId);
+        }else{
+            customer = customerRepository.findById(customerEnum.getAccount());
         }
-
-        Optional<Customer> customer = customerRepository.findById(customerEnum.getAccount());
         if(customer.isEmpty()){
-            throw BankingSystemException.notFound().message(ERROR_ACCOUNT_NOT_FOUND).build();
+            throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
         }
 
         String accountId = customer.get().getAccount().getAccountId();
@@ -157,11 +158,13 @@ public class TransactionService {
 
     private boolean checkAccount(String accountId){
         AccountId accountEnum = AccountId.fromCode(accountId);
+        Optional<Account> account;
         if(accountEnum == null){
-            return false;
+            account = accountRepository.findById(accountId);
+        }else{
+            account = accountRepository.findById(accountEnum.getAccount());
         }
 
-        Optional<Account> account = accountRepository.findById(accountEnum.getAccount());
         return account.isPresent();
     }
 

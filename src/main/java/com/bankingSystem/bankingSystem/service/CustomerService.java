@@ -34,11 +34,13 @@ public class CustomerService {
 
     public ResponseEntity<Customer> findById(String id){
         CustomerId customerEnum = CustomerId.fromCode(id);
-        if(customerEnum == null){
-            throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
-        }
+        Optional<Customer> customer;
 
-        Optional<Customer> customer = customerRepository.findById(customerEnum.getAccount());
+        if(customerEnum == null){
+            customer = customerRepository.findById(id);
+        }else{
+            customer = customerRepository.findById(customerEnum.getAccount());
+        }
         if(customer.isEmpty()){
             throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
         }
