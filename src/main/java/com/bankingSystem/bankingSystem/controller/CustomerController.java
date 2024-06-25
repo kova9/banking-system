@@ -4,6 +4,7 @@ import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.service.AccountService;
 import com.bankingSystem.bankingSystem.service.CustomerService;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,11 @@ public class CustomerController {
    @PostMapping("/turnover")
    public ResponseEntity<List<Account>> getTurnovers(){
       return accountService.getTurnovers();
+   }
+
+   @PostMapping("/create")
+   public ResponseEntity<Customer> createCustomer(@RequestBody JsonNode in){
+      return customerService.createCustomer(in);
    }
 
 }
