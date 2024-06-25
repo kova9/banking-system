@@ -1,8 +1,8 @@
 package com.bankingSystem.bankingSystem.dataaccess.sql;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
-import com.bankingSystem.bankingSystem.obj.CommonFields;
 import com.bankingSystem.bankingSystem.dto.SearchDto;
+import com.bankingSystem.bankingSystem.obj.CommonFields;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -56,6 +56,11 @@ public class TransactionSql implements Specification<Transaction> {
         if (this.searchDto.getCurrencyId() != null) {
             Predicate currencyPred = criteriaBuilder.equal(root.get(CommonFields.CURRENCY_ID), this.searchDto.getCurrencyId());
             allPredicates.add(currencyPred);
+        }
+
+        if (this.searchDto.getMessage() != null){
+            Predicate messagePred = criteriaBuilder.equal(root.get(CommonFields.MESSAGE), this.searchDto.getMessage());
+            allPredicates.add(messagePred);
         }
 
         if (this.searchDto.isSenderAndReceiverSame()) {

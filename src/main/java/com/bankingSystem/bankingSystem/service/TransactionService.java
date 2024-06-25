@@ -66,7 +66,7 @@ public class TransactionService {
         return ResponseEntity.ok(transactions);
     }
 
-    public ResponseEntity<List<Transaction>> filterTransactions(String customerId, String startDate, String endDate, String currencyId, BigDecimal minAmount, BigDecimal maxAmount) {
+    public ResponseEntity<List<Transaction>> filterTransactions(String customerId, String startDate, String endDate, String currencyId, BigDecimal minAmount, BigDecimal maxAmount, String message) {
         CustomerId customerEnum = CustomerId.fromCode(customerId);
         if(customerEnum == null){
             throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
@@ -86,6 +86,7 @@ public class TransactionService {
         searchDto.setMinAmount(minAmount);
         searchDto.setMaxAmount(maxAmount);
         searchDto.setSenderAndReceiverSame(true);
+        searchDto.setMessage(message);
         try{
             if(startDate != null){
                 searchDto.setStartDate(DateTimeUtil.stringToTimestamp(startDate));

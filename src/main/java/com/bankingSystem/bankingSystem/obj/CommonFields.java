@@ -6,4 +6,5 @@ public class CommonFields {
     public static final String AMOUNT = "amount";
     public static final String TIMESTAMP = "timestamp";
     public static final String CURRENCY_ID = "currencyId";
+    public static final String MESSAGE = "message";
 }

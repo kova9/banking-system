@@ -36,8 +36,9 @@ public class TransactionController {
                                                                 @RequestParam(required = false) String endDate,
                                                                 @RequestParam(required = false) String currencyId,
                                                                 @RequestParam(required = false) BigDecimal minAmount,
-                                                                @RequestParam(required = false) BigDecimal maxAmount){
-        return provider.filterTransactions(customerId, startDate, endDate, currencyId, minAmount, maxAmount);
+                                                                @RequestParam(required = false) BigDecimal maxAmount,
+                                                                @RequestParam(required = false) String message){
+        return provider.filterTransactions(customerId, startDate, endDate, currencyId, minAmount, maxAmount, message);
     }
 
 }
