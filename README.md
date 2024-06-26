@@ -12,6 +12,8 @@
 
 ### Example of requests:
 
+#### Swagger UI: http://localhost:8080/swagger-ui/index.html
+
 #### 1. save transaction data: /transaction/ (POST)
 
 {<br>
