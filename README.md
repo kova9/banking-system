@@ -14,7 +14,7 @@
 ### Swagger UI: 
     - Start server and open http://localhost:8080/swagger-ui/index.html to see all endpoints and Request examples<br>
     
-<br>
+
 #### All features from the specificatons are included and some more basic endpoints.
 <br>
 
