@@ -95,6 +95,8 @@ public class AccountService {
         checkAccountData(accountDto);
         Account account = accountLogic.create(accountDto);
 
+        accountRepository.save(account);
+
         return ResponseEntity.ok(account);
     }
 
