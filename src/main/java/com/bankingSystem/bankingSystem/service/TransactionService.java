@@ -141,8 +141,8 @@ public class TransactionService {
         String senderMail = customerRepository.findByAccountId(senderAccount.get().getAccountId()).getEmail();
         String receiverMail = customerRepository.findByAccountId(receiverAccount.get().getAccountId()).getEmail();
 
-        emailSenderService.sendMail(senderMail, senderInfo);
-        emailSenderService.sendMail(receiverMail, receiverInfo);
+//        emailSenderService.sendMail(senderMail, senderInfo);
+//        emailSenderService.sendMail(receiverMail, receiverInfo);
     }
 
     private void updateAccount(Optional<Account> account, Transaction transaction, boolean isReceiver){
@@ -219,6 +219,7 @@ public class TransactionService {
         }
 
         TransactionDto transactionDto = transaction.get().toDto();
+        transactionDto.setStorno(true);
         transactionLogic.update(transaction.get(), transactionDto);
 
         reverseTransactions(senderAccount, transaction, false);

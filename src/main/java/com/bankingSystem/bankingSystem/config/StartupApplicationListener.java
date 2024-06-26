@@ -53,7 +53,7 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
 
     public void parseAndImportTransactions(int part){
         try {
-            String relativePath = "data/transactions_multiple_two.json";
+            String relativePath = "data/transactions.json";
             File file = new File(relativePath);
 
             ObjectMapper mapper = new ObjectMapper();
@@ -91,7 +91,6 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
 
             List<Customer> customers = reader.readValue(file);
 
-            // Set customer reference in each account
             for (Customer customer : customers) {
                 for (Account account : customer.getAccounts()) {
                     account.setCustomer(customer);

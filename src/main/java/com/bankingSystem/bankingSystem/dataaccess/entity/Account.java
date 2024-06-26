@@ -1,6 +1,7 @@
 package com.bankingSystem.bankingSystem.dataaccess.entity;
 
 import com.bankingSystem.bankingSystem.dto.AccountDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,6 +35,7 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
+    @JsonBackReference
     private Customer customer;
 
     public AccountDto toDto(){
