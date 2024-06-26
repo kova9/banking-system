@@ -141,8 +141,8 @@ public class TransactionService {
         String senderMail = customerRepository.findByAccountId(senderAccount.get().getAccountId()).getEmail();
         String receiverMail = customerRepository.findByAccountId(receiverAccount.get().getAccountId()).getEmail();
 
-//        emailSenderService.sendMail(senderMail, senderInfo);
-//        emailSenderService.sendMail(receiverMail, receiverInfo);
+        emailSenderService.sendMail(senderMail, senderInfo);
+        emailSenderService.sendMail(receiverMail, receiverInfo);
     }
 
     private void updateAccount(Optional<Account> account, Transaction transaction, boolean isReceiver){
