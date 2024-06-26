@@ -5,13 +5,22 @@
     "address": "456 Elm St, Othertown, USA",
     "email": "kovacevic.tomislav9@gmail.com",
     "phoneNumber": "234-567-8901",
-    "account": {
-      "accountId": "d6a8f71c-6c29-4f62-9653-8a4b919e8c88",
-      "accountNumber": "1234567890",
-      "accountType": "Checking",
-      "balance": 5732.24,
-      "pastMonthTurnover": 1345.65
-    }
+    "accounts": [
+      {
+        "accountId": "d6a8f71c-6c29-4f62-9653-8a4b919e8c88",
+        "accountNumber": "1234567890",
+        "accountType": "Checking",
+        "balance": 5732.24,
+        "pastMonthTurnover": 1345.65
+      },
+      {
+        "accountId": "b9c5c4d4-1b32-4d68-b81c-318e4329e489",
+        "accountNumber": "1234567891",
+        "accountType": "Savings",
+        "balance": 8943.21,
+        "pastMonthTurnover": 2235.78
+      }
+    ]
   },
   {
     "customerId": "72e637a6-4f3b-4e5d-9531-29b3450de8b8",
@@ -19,13 +28,22 @@
     "address": "456 Elm St, Othertown, USA",
     "email": "janesmith@example.com",
     "phoneNumber": "234-567-8901",
-    "account": {
-      "accountId": "4bfec43e-89ed-4094-b8e0-4a217c7a8c33",
-      "accountNumber": "2345678901",
-      "accountType": "Savings",
-      "balance": 9843.12,
-      "pastMonthTurnover": 2345.67
-    }
+    "accounts": [
+      {
+        "accountId": "4bfec43e-89ed-4094-b8e0-4a217c7a8c33",
+        "accountNumber": "2345678901",
+        "accountType": "Savings",
+        "balance": 9843.12,
+        "pastMonthTurnover": 2345.67
+      },
+      {
+        "accountId": "4bfae25c-0c74-44f8-905b-9d567b67eb2e",
+        "accountNumber": "2345678902",
+        "accountType": "Checking",
+        "balance": 1043.12,
+        "pastMonthTurnover": 145.67
+      }
+    ]
   },
   {
     "customerId": "fb8d4b24-302e-4b59-80a0-97d0c168d437",
@@ -33,13 +51,22 @@
     "address": "789 Oak St, Sometown, USA",
     "email": "alicejohnson@example.com",
     "phoneNumber": "345-678-9012",
-    "account": {
-      "accountId": "0c1f4c2e-c08c-4e4a-9a27-2c1a66d70c92",
-      "accountNumber": "3456789012",
-      "accountType": "Checking",
-      "balance": 1234.56,
-      "pastMonthTurnover": 876.54
-    }
+    "accounts": [
+      {
+        "accountId": "0c1f4c2e-c08c-4e4a-9a27-2c1a66d70c92",
+        "accountNumber": "3456789012",
+        "accountType": "Checking",
+        "balance": 1234.56,
+        "pastMonthTurnover": 876.54
+      },
+      {
+        "accountId": "fc2d1b83-a531-4c4e-88b8-07e8f6b64f79",
+        "accountNumber": "3456789013",
+        "accountType": "Savings",
+        "balance": 5234.56,
+        "pastMonthTurnover": 1276.54
+      }
+    ]
   },
   {
     "customerId": "4e87dc7c-6c97-4e77-92b1-4f6d58a0be9d",
@@ -47,13 +74,22 @@
     "address": "101 Pine St, Anothertown, USA",
     "email": "bobbrown@example.com",
     "phoneNumber": "456-789-0123",
-    "account": {
-      "accountId": "d24d0648-1c8e-4f02-9e2d-458d2849f92d",
-      "accountNumber": "4567890123",
-      "accountType": "Savings",
-      "balance": 4567.89,
-      "pastMonthTurnover": 1678.9
-    }
+    "accounts": [
+      {
+        "accountId": "d24d0648-1c8e-4f02-9e2d-458d2849f92d",
+        "accountNumber": "4567890123",
+        "accountType": "Savings",
+        "balance": 4567.89,
+        "pastMonthTurnover": 1678.9
+      },
+      {
+        "accountId": "d2a0e524-1e75-4c5a-877b-7b1b1329c489",
+        "accountNumber": "4567890124",
+        "accountType": "Checking",
+        "balance": 2567.89,
+        "pastMonthTurnover": 567.9
+      }
+    ]
   },
   {
     "customerId": "c805f63b-410d-4916-87cb-23b2df4d5f07",
@@ -61,13 +97,22 @@
     "address": "202 Cedar St, Thistown, USA",
     "email": "carolwhite@example.com",
     "phoneNumber": "567-890-1234",
-    "account": {
-      "accountId": "bc24903b-4208-43e0-92f1-1b5a3f4c12f5",
-      "accountNumber": "5678901234",
-      "accountType": "Checking",
-      "balance": 2345.67,
-      "pastMonthTurnover": 987.65
-    }
+    "accounts": [
+      {
+        "accountId": "bc24903b-4208-43e0-92f1-1b5a3f4c12f5",
+        "accountNumber": "5678901234",
+        "accountType": "Checking",
+        "balance": 2345.67,
+        "pastMonthTurnover": 987.65
+      },
+      {
+        "accountId": "ac0c4d5b-725e-4e0c-9a57-9d6184b7d5c7",
+        "accountNumber": "5678901235",
+        "accountType": "Savings",
+        "balance": 5345.67,
+        "pastMonthTurnover": 1987.65
+      }
+    ]
   },
   {
     "customerId": "60b6edb8-761d-4d94-b805-905170b319c8",
@@ -75,13 +120,22 @@
     "address": "303 Birch St, Thatown, USA",
     "email": "davidblack@example.com",
     "phoneNumber": "678-901-2345",
-    "account": {
-      "accountId": "87f2b194-9582-4c56-b848-1d8b4e66c0a3",
-      "accountNumber": "6789012345",
-      "accountType": "Savings",
-      "balance": 6789.01,
-      "pastMonthTurnover": 1234.56
-    }
+    "accounts": [
+      {
+        "accountId": "87f2b194-9582-4c56-b848-1d8b4e66c0a3",
+        "accountNumber": "6789012345",
+        "accountType": "Savings",
+        "balance": 6789.01,
+        "pastMonthTurnover": 1234.56
+      },
+      {
+        "accountId": "cf3d5e48-1e8b-4c5c-877c-8d1b4239f489",
+        "accountNumber": "6789012346",
+        "accountType": "Checking",
+        "balance": 2789.01,
+        "pastMonthTurnover": 834.56
+      }
+    ]
   },
   {
     "customerId": "42baccb6-5ef7-40c7-8a1a-2f3dce9476e8",
@@ -89,13 +143,22 @@
     "address": "404 Walnut St, Whoville, USA",
     "email": "evegreen@example.com",
     "phoneNumber": "789-012-3456",
-    "account": {
-      "accountId": "ad0c60b3-fd6a-4ab7-a6b7-995f9cf7dbeb",
-      "accountNumber": "7890123456",
-      "accountType": "Checking",
-      "balance": 3456.78,
-      "pastMonthTurnover": 789.01
-    }
+    "accounts": [
+      {
+        "accountId": "ad0c60b3-fd6a-4ab7-a6b7-995f9cf7dbeb",
+        "accountNumber": "7890123456",
+        "accountType": "Checking",
+        "balance": 3456.78,
+        "pastMonthTurnover": 789.01
+      },
+      {
+        "accountId": "bd0e34c8-725e-4c0c-9b97-8d123456b7d5",
+        "accountNumber": "7890123457",
+        "accountType": "Savings",
+        "balance": 4456.78,
+        "pastMonthTurnover": 1789.01
+      }
+    ]
   },
   {
     "customerId": "d8b5c5c9-4c4d-4f3e-8aeb-9268a74d1d4a",
@@ -103,28 +166,45 @@
     "address": "505 Maple St, Whoville, USA",
     "email": "frankblue@example.com",
     "phoneNumber": "890-123-4567",
-    "account": {
-      "accountId": "43890d5b-d1ff-40ad-a7b2-0c4a024d3093",
-      "accountNumber": "8901234567",
-      "accountType": "Savings",
-      "balance": 7890.12,
-      "pastMonthTurnover": 456.78
-    }
+    "accounts": [
+      {
+        "accountId": "43890d5b-d1ff-40ad-a7b2-0c4a024d3093",
+        "accountNumber": "8901234567",
+        "accountType": "Savings",
+        "balance": 7890.12,
+        "pastMonthTurnover": 456.78
+      },
+      {
+        "accountId": "d3e2b6f1-0c94-4f8c-905d-0b168d7aeb56",
+        "accountNumber": "8901234568",
+        "accountType": "Checking",
+        "balance": 3890.12,
+        "pastMonthTurnover": 756.78
+      }
+    ]
   },
   {
     "customerId": "de2c9b2d-32a3-420e-8f84-3a51b4c92d61",
-
     "name": "Grace Red",
     "address": "606 Spruce St, Heretown, USA",
     "email": "gracered@example.com",
     "phoneNumber": "901-234-5678",
-    "account": {
-      "accountId": "fa25728c-3f21-4f5d-8c8e-9c1a3782f8e7",
-      "accountNumber": "9012345678",
-      "accountType": "Checking",
-      "balance": 9012.34,
-      "pastMonthTurnover": 123.45
-    }
+    "accounts": [
+      {
+        "accountId": "fa25728c-3f21-4f5d-8c8e-9c1a3782f8e7",
+        "accountNumber": "9012345678",
+        "accountType": "Checking",
+        "balance": 9012.34,
+        "pastMonthTurnover": 123.45
+      },
+      {
+        "accountId": "fb3d672a-1c94-4b2c-88c8-1c123456a7d5",
+        "accountNumber": "9012345679",
+        "accountType": "Savings",
+        "balance": 10012.34,
+        "pastMonthTurnover": 523.45
+      }
+    ]
   },
   {
     "customerId": "69e92d14-8c65-4fd7-8b20-4e4ab4b9d0d5",
@@ -132,12 +212,21 @@
     "address": "707 Fir St, Thattown, USA",
     "email": "henryyellow@example.com",
     "phoneNumber": "012-345-6789",
-    "account": {
-      "accountId": "b9a8b514-60d1-45f1-9a02-5f2e0a7654b5",
-      "accountNumber": "0123456789",
-      "accountType": "Savings",
-      "balance": 1234.56,
-      "pastMonthTurnover": 345.67
-    }
+    "accounts": [
+      {
+        "accountId": "b9a8b514-60d1-45f1-9a02-5f2e0a7654b5",
+        "accountNumber": "0123456789",
+        "accountType": "Savings",
+        "balance": 1234.56,
+        "pastMonthTurnover": 345.67
+      },
+      {
+        "accountId": "c1a8b515-60d1-45f1-9a02-5f3e0a7654b5",
+        "accountNumber": "0123456790",
+        "accountType": "Checking",
+        "balance": 2234.56,
+        "pastMonthTurnover": 445.67
+      }
+    ]
   }
 ]

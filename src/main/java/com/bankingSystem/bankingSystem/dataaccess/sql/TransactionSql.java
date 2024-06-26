@@ -23,13 +23,13 @@ public class TransactionSql implements Specification<Transaction> {
     public Predicate toPredicate(Root<Transaction> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> allPredicates = new ArrayList<>();
 
-        if (this.searchDto.getSenderId() != null && !this.searchDto.isSenderAndReceiverSame()) {
-            Predicate senderAccount = criteriaBuilder.equal(root.get(CommonFields.SENDER_ACCOUNT_ID), this.searchDto.getSenderId());
+        if (this.searchDto.getSenderId() != null && !this.searchDto.getSenderId().isEmpty() && !this.searchDto.isSenderAndReceiverSame()) {
+            Predicate senderAccount = root.get(CommonFields.SENDER_ACCOUNT_ID).in(this.searchDto.getSenderId());
             allPredicates.add(senderAccount);
         }
 
-        if (this.searchDto.getReceiverId() != null && !this.searchDto.isSenderAndReceiverSame()) {
-            Predicate receiverAccount = criteriaBuilder.equal(root.get(CommonFields.RECEIVER_ACCOUNT_ID), this.searchDto.getReceiverId());
+        if (this.searchDto.getReceiverId() != null && !this.searchDto.getReceiverId().isEmpty() && !this.searchDto.isSenderAndReceiverSame()) {
+            Predicate receiverAccount = root.get(CommonFields.RECEIVER_ACCOUNT_ID).in(this.searchDto.getReceiverId());
             allPredicates.add(receiverAccount);
         }
 
@@ -62,18 +62,18 @@ public class TransactionSql implements Specification<Transaction> {
             Predicate messagePred = criteriaBuilder.equal(root.get(CommonFields.MESSAGE), this.searchDto.getMessage());
             allPredicates.add(messagePred);
         }
+
         if (this.searchDto.isStorno()){
             Predicate stornoTruePred = criteriaBuilder.equal(root.get(CommonFields.STORNO), this.searchDto.isStorno());
             allPredicates.add(stornoTruePred);
-        }
-        if (!this.searchDto.isStorno()){
+        } else {
             Predicate stornoFalsePred = criteriaBuilder.equal(root.get(CommonFields.STORNO), this.searchDto.isStorno());
             allPredicates.add(stornoFalsePred);
         }
 
         if (this.searchDto.isSenderAndReceiverSame()) {
-            Predicate senderAccount = criteriaBuilder.equal(root.get(CommonFields.SENDER_ACCOUNT_ID), this.searchDto.getSenderId());
-            Predicate receiverAccount = criteriaBuilder.equal(root.get(CommonFields.RECEIVER_ACCOUNT_ID), this.searchDto.getReceiverId());
+            Predicate senderAccount = root.get(CommonFields.SENDER_ACCOUNT_ID).in(this.searchDto.getSenderId());
+            Predicate receiverAccount = root.get(CommonFields.RECEIVER_ACCOUNT_ID).in(this.searchDto.getReceiverId());
             Predicate orPredicate = criteriaBuilder.or(senderAccount, receiverAccount);
 
             allPredicates.add(orPredicate);
@@ -82,7 +82,6 @@ public class TransactionSql implements Specification<Transaction> {
             if (!allPredicates.isEmpty()) {
                 return criteriaBuilder.and(allPredicates.toArray(new Predicate[0]));
             } else {
-
                 return criteriaBuilder.conjunction();
             }
         }

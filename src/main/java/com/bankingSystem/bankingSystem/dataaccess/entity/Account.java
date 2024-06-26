@@ -1,19 +1,16 @@
 package com.bankingSystem.bankingSystem.dataaccess.entity;
 
 import com.bankingSystem.bankingSystem.dto.AccountDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
 @Data
+//Turn on when debugging
+@ToString(exclude = "customer")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,6 +32,11 @@ public class Account {
 
     @Column
     private BigDecimal pastMonthTurnover;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
+    @JsonBackReference
+    private Customer customer;
 
     public AccountDto toDto(){
         AccountDto dto = new AccountDto();

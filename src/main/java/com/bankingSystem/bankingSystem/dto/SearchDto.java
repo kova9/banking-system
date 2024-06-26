@@ -6,11 +6,12 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 public class SearchDto {
-    private String receiverId;
-    private String senderId;
+    private List<String> receiverId;
+    private List<String> senderId;
     private String message;
     private BigDecimal minAmount;
     private BigDecimal maxAmount;

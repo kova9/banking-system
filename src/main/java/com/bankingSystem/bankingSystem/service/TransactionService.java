@@ -78,11 +78,12 @@ public class TransactionService {
             throw BankingSystemException.notFound().message(ERROR_CUSTOMER_NOT_FOUND).build();
         }
 
-        String accountId = customer.get().getAccount().getAccountId();
+        List<String> accountIds = new ArrayList<>();
+        customer.get().getAccounts().forEach(acc -> accountIds.add(acc.getAccountId()));
         SearchDto searchDto = new SearchDto();
 
-        searchDto.setSenderId(accountId);
-        searchDto.setReceiverId(accountId);
+        searchDto.setSenderId(accountIds);
+        searchDto.setReceiverId(accountIds);
         searchDto.setCurrencyId(currencyId);
         searchDto.setMinAmount(minAmount);
         searchDto.setMaxAmount(maxAmount);
@@ -140,8 +141,8 @@ public class TransactionService {
         String senderMail = customerRepository.findByAccountId(senderAccount.get().getAccountId()).getEmail();
         String receiverMail = customerRepository.findByAccountId(receiverAccount.get().getAccountId()).getEmail();
 
-        emailSenderService.sendMail(senderMail, senderInfo);
-        emailSenderService.sendMail(receiverMail, receiverInfo);
+//        emailSenderService.sendMail(senderMail, senderInfo);
+//        emailSenderService.sendMail(receiverMail, receiverInfo);
     }
 
     private void updateAccount(Optional<Account> account, Transaction transaction, boolean isReceiver){
@@ -218,6 +219,7 @@ public class TransactionService {
         }
 
         TransactionDto transactionDto = transaction.get().toDto();
+        transactionDto.setStorno(true);
         transactionLogic.update(transaction.get(), transactionDto);
 
         reverseTransactions(senderAccount, transaction, false);

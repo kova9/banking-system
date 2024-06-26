@@ -1,8 +1,10 @@
 package com.bankingSystem.bankingSystem.service;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
+import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
 import com.bankingSystem.bankingSystem.dataaccess.repository.AccountRepository;
+import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
 import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionRepository;
 import com.bankingSystem.bankingSystem.dataaccess.sql.TransactionSql;
 import com.bankingSystem.bankingSystem.dto.SearchDto;
@@ -22,17 +24,22 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
+    private final CustomerRepository customerRepository;
 
-    public AccountService(AccountRepository accountRepository, TransactionRepository transactionRepository){
+    public AccountService(AccountRepository accountRepository, TransactionRepository transactionRepository, CustomerRepository customerRepository){
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
+        this.customerRepository = customerRepository;
     }
 
     public ResponseEntity<List<Account>> getTurnovers(){
         Timestamp startDate = Timestamp.valueOf(LocalDateTime.now().minusMonths(1));
         Timestamp endDate = Timestamp.valueOf(LocalDateTime.now());
 
-        List<Account> accounts = new ArrayList<>(accountRepository.findAll());
+        List<Account> accounts = accountRepository.findAll();
+//        List<Customer> customers = customerRepository.findAll();
+//        List<Account> accounts = new ArrayList<>();
+//        customers.forEach(customer -> accounts.add(customer.getAccounts()));
 
         for(Account account : accounts){
             BigDecimal turnOver = calculateTurnover(account, startDate, endDate);
@@ -45,8 +52,12 @@ public class AccountService {
 
     private BigDecimal calculateTurnover(Account account, Timestamp startDate, Timestamp endDate){
         SearchDto searchDto = new SearchDto();
-        searchDto.setReceiverId(account.getAccountId());
-        searchDto.setSenderId(account.getAccountId());
+
+        searchDto.setSenderId(new ArrayList<>());
+        searchDto.setReceiverId(new ArrayList<>());
+
+        searchDto.getReceiverId().add(account.getAccountId());
+        searchDto.getSenderId().add(account.getAccountId());
         searchDto.setStartDate(startDate);
         searchDto.setEndDate(endDate);
         searchDto.setSenderAndReceiverSame(true);
