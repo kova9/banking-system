@@ -3,7 +3,6 @@ package com.bankingSystem.bankingSystem.controller;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.dto.CustomerDto;
-import com.bankingSystem.bankingSystem.dto.TransactionDto;
 import com.bankingSystem.bankingSystem.service.AccountService;
 import com.bankingSystem.bankingSystem.service.CustomerService;
 import com.fasterxml.jackson.databind.JsonNode;

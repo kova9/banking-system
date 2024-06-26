@@ -10,4 +10,7 @@ public class ExceptionMessages {
     public static final String ERROR_INVALID_DATE = "Invalid date";
     public static final String ERROR_TRANSACTION_DOESNT_EXIST = "Transaction doesn't exist";
     public static final String ERROR_EMAIL_ALREADY_TAKEN = "Email is already taken";
+    public static final String ERROR_CUSTOMER_FIELD_IS_MANDATORY = "Customer field is mandatory";
+    public static final String ERROR_ACCOUNT_TYPE_DOESNT_EXIST = "Account type doesnt exist";
+    public static final String ERROR_ACCOUNT_CANT_BE_EMTPY = "Account type cant be empty";
 }

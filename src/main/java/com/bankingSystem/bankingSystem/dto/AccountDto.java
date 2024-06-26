@@ -19,6 +19,8 @@ public class AccountDto {
 
     private BigDecimal pastMonthTurnover;
 
+    private String customerId;
+
     public static AccountDto fromJson(JsonNode json) {
         if (json != null) {
             return new Gson().fromJson(json.toString(), AccountDto.class);

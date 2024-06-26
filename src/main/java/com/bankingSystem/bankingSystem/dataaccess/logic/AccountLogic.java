@@ -2,6 +2,7 @@ package com.bankingSystem.bankingSystem.dataaccess.logic;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
 import com.bankingSystem.bankingSystem.dto.AccountDto;
+import com.bankingSystem.bankingSystem.enums.AccountType;
 import com.bankingSystem.bankingSystem.util.AccountNumberUtil;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,11 @@ public class AccountLogic {
             account.setAccountId(dto.getAccountId());
         }
 
-        account.setAccountType("Checking");
+        if(dto.getAccountType().isEmpty()){
+            account.setAccountType(AccountType.CHECKING.getDescription());
+        }else{
+            account.setAccountType(AccountType.fromCode(dto.getAccountType()).getDescription());
+        }
         account.setAccountNumber(AccountNumberUtil.generateRandomAccountNumber());
         account.setBalance(BigDecimal.ZERO);
         account.setPastMonthTurnover(BigDecimal.ZERO);
