@@ -2,9 +2,14 @@ package com.bankingSystem.bankingSystem.controller;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
+import com.bankingSystem.bankingSystem.dto.CustomerDto;
+import com.bankingSystem.bankingSystem.dto.TransactionDto;
 import com.bankingSystem.bankingSystem.service.AccountService;
 import com.bankingSystem.bankingSystem.service.CustomerService;
 import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +43,11 @@ public class CustomerController {
    }
 
    @PostMapping("/")
+   @Parameter(name = "name", example = "Pero Peric", required = true)
+   @Parameter(name = "address", example = "Example Address 19", required = true)
+   @Parameter(name = "email", example = "test@test.com", required = true)
+   @Parameter(name = "phoneNumber", example = "0992699646", required = true)
+   @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Customer to add", required = true, content = @Content(schema = @Schema(implementation = CustomerDto.class)))
    public ResponseEntity<Customer> createCustomer(@RequestBody JsonNode in){
       return customerService.createCustomer(in);
    }
