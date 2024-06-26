@@ -10,47 +10,11 @@
     5. 100 000 transactions will get imported at the start of the server, aswell as 10 Customers and 20 accounts (two accounts per customer).
     
 
-### Example of requests:
 
-#### Swagger UI: - Start server and open http://localhost:8080/swagger-ui/index.html
-
-#### 1. save transaction data: /transaction/ (POST)
-
-{<br>
-    "senderAccountId":"4", <br>
-    "receiverAccountId":"10",<br>
-    "amount":100000,<br>
-    "currencyId":"EUR",<br>
-    "message":"testMessage"<br>
-}<br>
+### Swagger UI: 
+    - Start server and open http://localhost:8080/swagger-ui/index.html to see all endpoints and Request examples<br>
+    
 <br>
- #### 2. get customer data: /customer/{id} (GET)
- /customer/5 <br>
- or <br>
- /customer/c805f63b-410d-4916-87cb-23b2df4d5f07
- <br>
- <br>
- #### 3. get transaction history for customer: /transaction/history/{customerId} {GET}
- /transaction/history/5?minAmount=10&currency=EUR <br>
- or <br>
- /transaction/history/c805f63b-410d-4916-87cb-23b2df4d5f07?maxAmount=10000&currency=USD
-<br>
-<br>
- #### 4. create new customer: /customer/ {POST}
- {<br>
-    "name":"Pero Peric", <br>
-    "address":"Ulica Pere Perica 12", <br>
-    "email":"pero.peric@peric-pero.hr", <br>
-    "phoneNumber":"0992699646" <br>
- }<br>
-<br>
-#### 5. transaction storno: /transaction/storno/{transactionId}
-/transaction/storno/c99740a2-4e7f-44c1-8c35-e754d0a2113a
-<br>
-<br>
-#### There is no need for external software.
-<br>
-
 #### All features from the specificatons are included and some more basic endpoints.
 <br>
 
