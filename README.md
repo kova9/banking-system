@@ -12,7 +12,7 @@
 
 ### Example of requests:
 
-#### Swagger UI: http://localhost:8080/swagger-ui/index.html
+#### Swagger UI: - Start server and open http://localhost:8080/swagger-ui/index.html
 
 #### 1. save transaction data: /transaction/ (POST)
 
