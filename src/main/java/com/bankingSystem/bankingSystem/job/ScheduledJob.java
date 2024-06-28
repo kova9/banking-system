@@ -1,7 +1,7 @@
 package com.bankingSystem.bankingSystem.job;
 
 import com.bankingSystem.bankingSystem.job.common.Expressions;
-import com.bankingSystem.bankingSystem.service.AccountService;
+import com.bankingSystem.bankingSystem.account.service.AccountService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

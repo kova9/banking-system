@@ -1,10 +1,10 @@
 package com.bankingSystem.bankingSystem.config;
 
-import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
-import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
-import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
-import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
-import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionRepository;
+import com.bankingSystem.bankingSystem.account.entity.Account;
+import com.bankingSystem.bankingSystem.customer.entity.Customer;
+import com.bankingSystem.bankingSystem.transaction.entity.Transaction;
+import com.bankingSystem.bankingSystem.customer.repository.CustomerRepository;
+import com.bankingSystem.bankingSystem.transaction.repository.TransactionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

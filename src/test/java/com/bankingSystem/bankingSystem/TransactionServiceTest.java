@@ -1,9 +1,9 @@
 package com.bankingSystem.bankingSystem;
 
-import com.bankingSystem.bankingSystem.dataaccess.entity.Transaction;
-import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionRepository;
+import com.bankingSystem.bankingSystem.transaction.entity.Transaction;
+import com.bankingSystem.bankingSystem.transaction.repository.TransactionRepository;
 import com.bankingSystem.bankingSystem.exception.BankingSystemException;
-import com.bankingSystem.bankingSystem.service.TransactionService;
+import com.bankingSystem.bankingSystem.transaction.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
