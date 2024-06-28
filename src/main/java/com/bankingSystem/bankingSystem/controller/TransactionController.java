@@ -32,7 +32,7 @@ public class TransactionController {
     @Parameter(name = "message", example = "TestMessage", required = false)
     @Parameter(name = "storno", example = "false", required = false)
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Transaction to add", required = true, content = @Content(schema = @Schema(implementation = TransactionDto.class)))
-    public ResponseEntity<TransactionResponse> saveTransaction(@RequestBody JsonNode in){
+    public ResponseEntity<TransactionResponse> saveTransaction(@RequestBody TransactionDto in){
         return transactionService.saveTransaction(in);
     }
 

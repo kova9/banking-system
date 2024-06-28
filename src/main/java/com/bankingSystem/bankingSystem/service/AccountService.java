@@ -10,7 +10,6 @@ import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionReposito
 import com.bankingSystem.bankingSystem.dataaccess.sql.TransactionSql;
 import com.bankingSystem.bankingSystem.dto.AccountDto;
 import com.bankingSystem.bankingSystem.dto.SearchDto;
-import com.bankingSystem.bankingSystem.enums.AccountId;
 import com.bankingSystem.bankingSystem.enums.AccountType;
 import com.bankingSystem.bankingSystem.enums.CustomerId;
 import com.bankingSystem.bankingSystem.exception.BankingSystemException;
@@ -50,9 +49,6 @@ public class AccountService {
         Timestamp endDate = Timestamp.valueOf(LocalDateTime.now());
 
         List<Account> accounts = accountRepository.findAll();
-//        List<Customer> customers = customerRepository.findAll();
-//        List<Account> accounts = new ArrayList<>();
-//        customers.forEach(customer -> accounts.add(customer.getAccounts()));
 
         for(Account account : accounts){
             BigDecimal turnOver = calculateTurnover(account, startDate, endDate);

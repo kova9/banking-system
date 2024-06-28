@@ -8,16 +8,18 @@ import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionReposito
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.logging.Logger;
+import java.util.concurrent.*;
 
+@Slf4j
 @Component
 public class StartupApplicationListener implements ApplicationListener<ApplicationReadyEvent> {
 
@@ -33,11 +35,28 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
     public void onApplicationEvent(ApplicationReadyEvent event) {
         ExecutorService executorService = Executors.newFixedThreadPool(3);
 
-        executorService.submit(this::parseAndImportTransactionsFirstHalf);
-        executorService.submit(this::parseAndImportTransactionsSecondHalf);
-        executorService.submit(this::parseAndImportCustomers);
+        try {
+            Future<?> future = executorService.submit(this::parseAndImportCustomers);
+            future.get();
 
-        executorService.shutdown();
+            executorService.submit(this::parseAndImportTransactionsFirstHalf);
+            executorService.submit(this::parseAndImportTransactionsSecondHalf);
+        } catch (ExecutionException | InterruptedException e) {
+            logger.error(e.getMessage());
+        } finally {
+            executorService.shutdown();
+            try {
+                if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+                    executorService.shutdownNow();
+                    if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+                        logger.info("ExecutorService did not terminate");
+                    }
+                }
+            } catch (InterruptedException ie) {
+                executorService.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 
     public void parseAndImportTransactionsFirstHalf() {
@@ -48,7 +67,7 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
         parseAndImportTransactions(1);
     }
 
-    Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = LoggerFactory.getLogger(StartupApplicationListener.class);
 
 
     public void parseAndImportTransactions(int part){
@@ -77,7 +96,7 @@ public class StartupApplicationListener implements ApplicationListener<Applicati
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 

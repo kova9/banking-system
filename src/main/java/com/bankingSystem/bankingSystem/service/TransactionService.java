@@ -107,9 +107,7 @@ public class TransactionService {
         return ResponseEntity.ok(transactions);
     }
 
-    public ResponseEntity<TransactionResponse> saveTransaction(JsonNode in) {
-        TransactionDto dto = TransactionDto.fromJson(in);
-
+    public ResponseEntity<TransactionResponse> saveTransaction(TransactionDto dto) {
         checkTransactionData(dto);
 
         Transaction newTransaction = transactionLogic.create(dto);

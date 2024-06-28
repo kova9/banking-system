@@ -3,6 +3,8 @@ package com.bankingSystem.bankingSystem.util;
 import java.security.SecureRandom;
 
 public class AccountNumberUtil {
+
+    private AccountNumberUtil(){}
     public static String generateRandomAccountNumber() {
         int length = 16;
         SecureRandom random = new SecureRandom();

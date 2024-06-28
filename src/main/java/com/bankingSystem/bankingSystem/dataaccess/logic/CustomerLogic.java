@@ -24,7 +24,6 @@ public class CustomerLogic {
         customer.setEmail(dto.getEmail());
         customer.setAddress(dto.getAddress());
         customer.setPhoneNumber(dto.getPhoneNumber());
-//        customer.setAccount(accountLogic.create(new AccountDto()));
         customer.setAccounts(List.of(accountLogic.create(new AccountDto())));
 
         return customer;

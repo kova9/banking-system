@@ -52,9 +52,7 @@ public class CustomerService {
         return ResponseEntity.ok(customer.get());
     }
 
-    public ResponseEntity<Customer> createCustomer(JsonNode in) {
-        CustomerDto dto = CustomerDto.fromJson(in);
-
+    public ResponseEntity<Customer> createCustomer(CustomerDto dto) {
         checkCustomerData(dto);
         Customer customer = customerLogic.create(dto);
         customerRepository.save(customer);

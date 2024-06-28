@@ -14,8 +14,10 @@ import java.util.Map;
 @Service
 public class EmailSenderService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
+    public EmailSenderService(JavaMailSender mailSender){
+        this.mailSender = mailSender;
+    }
 
     private final static String EMAIL_SUBJECT = "New Transaction";
     private final static String EMAIL_SENDER = "bankingsystem.testmail@gmail.com";

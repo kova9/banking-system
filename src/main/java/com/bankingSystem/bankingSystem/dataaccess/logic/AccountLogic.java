@@ -28,12 +28,13 @@ public class AccountLogic {
             account.setAccountId(dto.getAccountId());
         }
 
-        if(dto.getAccountType().isEmpty()){
+        if(dto.getAccountType() == null){
             account.setAccountType(AccountType.CHECKING.getDescription());
         }else{
             account.setAccountType(AccountType.fromCode(dto.getAccountType()).getDescription());
         }
-        if(!dto.getCustomerId().isEmpty()){
+
+        if(dto.getCustomerId() != null ){
             Optional<Customer> customer = customerRepository.findById(dto.getCustomerId());
             customer.ifPresent(account::setCustomer);
         }

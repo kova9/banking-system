@@ -47,7 +47,7 @@ public class CustomerController {
    @Parameter(name = "email", example = "test@test.com", required = true)
    @Parameter(name = "phoneNumber", example = "0992699646", required = true)
    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Customer to add", required = true, content = @Content(schema = @Schema(implementation = CustomerDto.class)))
-   public ResponseEntity<Customer> createCustomer(@RequestBody JsonNode in){
+   public ResponseEntity<Customer> createCustomer(@RequestBody CustomerDto in){
       return customerService.createCustomer(in);
    }
 
