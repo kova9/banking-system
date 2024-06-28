@@ -6,7 +6,6 @@ import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
 import com.bankingSystem.bankingSystem.dto.CustomerDto;
 import com.bankingSystem.bankingSystem.enums.CustomerId;
 import com.bankingSystem.bankingSystem.exception.BankingSystemException;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

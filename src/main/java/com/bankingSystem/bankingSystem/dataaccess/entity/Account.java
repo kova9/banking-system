@@ -3,7 +3,6 @@ package com.bankingSystem.bankingSystem.dataaccess.entity;
 import com.bankingSystem.bankingSystem.dto.AccountDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.math.BigDecimal;
 

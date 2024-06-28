@@ -1,11 +1,8 @@
 package com.bankingSystem.bankingSystem.controller;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
-import com.bankingSystem.bankingSystem.dto.AccountDto;
 import com.bankingSystem.bankingSystem.dto.CreateAccountDto;
-import com.bankingSystem.bankingSystem.dto.CustomerDto;
 import com.bankingSystem.bankingSystem.service.AccountService;
-import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

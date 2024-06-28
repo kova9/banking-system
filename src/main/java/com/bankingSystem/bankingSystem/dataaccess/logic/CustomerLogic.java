@@ -1,7 +1,6 @@
 package com.bankingSystem.bankingSystem.dataaccess.logic;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
-import com.bankingSystem.bankingSystem.dto.AccountDto;
 import com.bankingSystem.bankingSystem.dto.CreateAccountDto;
 import com.bankingSystem.bankingSystem.dto.CustomerDto;
 import org.springframework.stereotype.Component;

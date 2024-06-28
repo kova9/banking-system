@@ -5,7 +5,6 @@ import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.dto.CustomerDto;
 import com.bankingSystem.bankingSystem.service.AccountService;
 import com.bankingSystem.bankingSystem.service.CustomerService;
-import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
