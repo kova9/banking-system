@@ -4,6 +4,7 @@ import com.bankingSystem.bankingSystem.dataaccess.entity.Account;
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
 import com.bankingSystem.bankingSystem.dto.AccountDto;
+import com.bankingSystem.bankingSystem.dto.CreateAccountDto;
 import com.bankingSystem.bankingSystem.enums.AccountType;
 import com.bankingSystem.bankingSystem.util.AccountNumberUtil;
 import org.springframework.stereotype.Component;
@@ -19,25 +20,19 @@ public class AccountLogic {
     public AccountLogic(CustomerRepository customerRepository){
         this.customerRepository = customerRepository;
     }
-    public Account create(AccountDto dto){
+    public Account create(CreateAccountDto dto){
         Account account = new Account();
 
-        if(dto.getAccountId() == null){
-            account.setAccountId(UUID.randomUUID().toString());
-        }else{
-            account.setAccountId(dto.getAccountId());
-        }
-
+        account.setAccountId(UUID.randomUUID().toString());
         if(dto.getAccountType() == null){
             account.setAccountType(AccountType.CHECKING.getDescription());
         }else{
             account.setAccountType(AccountType.fromCode(dto.getAccountType()).getDescription());
         }
 
-        if(dto.getCustomerId() != null ){
-            Optional<Customer> customer = customerRepository.findById(dto.getCustomerId());
-            customer.ifPresent(account::setCustomer);
-        }
+        Optional<Customer> customer = customerRepository.findById(dto.getCustomerId());
+        customer.ifPresent(account::setCustomer);
+
         account.setAccountNumber(AccountNumberUtil.generateRandomAccountNumber());
         account.setBalance(BigDecimal.ZERO);
         account.setPastMonthTurnover(BigDecimal.ZERO);

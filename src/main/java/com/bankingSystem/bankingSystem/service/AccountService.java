@@ -9,6 +9,7 @@ import com.bankingSystem.bankingSystem.dataaccess.repository.CustomerRepository;
 import com.bankingSystem.bankingSystem.dataaccess.repository.TransactionRepository;
 import com.bankingSystem.bankingSystem.dataaccess.sql.TransactionSql;
 import com.bankingSystem.bankingSystem.dto.AccountDto;
+import com.bankingSystem.bankingSystem.dto.CreateAccountDto;
 import com.bankingSystem.bankingSystem.dto.SearchDto;
 import com.bankingSystem.bankingSystem.enums.AccountType;
 import com.bankingSystem.bankingSystem.enums.CustomerId;
@@ -86,17 +87,16 @@ public class AccountService {
         return turnOver;
     }
 
-    public ResponseEntity<Account> createAccount(JsonNode in) {
-        AccountDto accountDto = AccountDto.fromJson(in);
-        checkAccountData(accountDto);
-        Account account = accountLogic.create(accountDto);
+    public ResponseEntity<Account> createAccount(CreateAccountDto dto) {
+        checkAccountData(dto);
+        Account account = accountLogic.create(dto);
 
         accountRepository.save(account);
 
         return ResponseEntity.ok(account);
     }
 
-    private void checkAccountData(AccountDto accountDto){
+    private void checkAccountData(CreateAccountDto accountDto){
         if(accountDto.getCustomerId().isEmpty()){
             throw BankingSystemException.badRequest().message(ERROR_CUSTOMER_FIELD_IS_MANDATORY).build();
         }else{

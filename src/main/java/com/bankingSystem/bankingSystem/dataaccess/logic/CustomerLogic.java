@@ -2,6 +2,7 @@ package com.bankingSystem.bankingSystem.dataaccess.logic;
 
 import com.bankingSystem.bankingSystem.dataaccess.entity.Customer;
 import com.bankingSystem.bankingSystem.dto.AccountDto;
+import com.bankingSystem.bankingSystem.dto.CreateAccountDto;
 import com.bankingSystem.bankingSystem.dto.CustomerDto;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,9 @@ public class CustomerLogic {
         customer.setEmail(dto.getEmail());
         customer.setAddress(dto.getAddress());
         customer.setPhoneNumber(dto.getPhoneNumber());
-        customer.setAccounts(List.of(accountLogic.create(new AccountDto())));
+        CreateAccountDto createAccountDto = new CreateAccountDto();
+        createAccountDto.setCustomerId(customer.getCustomerId());
+        customer.setAccounts(List.of(accountLogic.create(createAccountDto)));
 
         return customer;
     }
