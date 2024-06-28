@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+class GlobalExceptionHandler {
 
     @ExceptionHandler(BankingSystemException.class)
     public ResponseEntity<ErrorResponse> handleBankingSystemException(BankingSystemException ex) {

@@ -1,6 +1,6 @@
 package com.bankingSystem.bankingSystem.email;
 
-public class EmailFields {
+class EmailFields {
 
     public static final String TRANSACTION_ID = "id";
     public static final String AMOUNT = "amount";

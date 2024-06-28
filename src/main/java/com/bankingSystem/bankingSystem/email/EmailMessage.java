@@ -2,7 +2,7 @@ package com.bankingSystem.bankingSystem.email;
 
 import java.util.Map;
 
-public enum EmailMessage {
+enum EmailMessage {
 
     MESSAGE(""" 
                Hello!

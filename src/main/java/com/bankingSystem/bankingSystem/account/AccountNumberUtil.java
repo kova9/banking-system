@@ -2,7 +2,7 @@ package com.bankingSystem.bankingSystem.account;
 
 import java.security.SecureRandom;
 
-public class AccountNumberUtil {
+class AccountNumberUtil {
 
     private AccountNumberUtil(){}
     public static String generateRandomAccountNumber() {

@@ -1,6 +1,6 @@
 package com.bankingSystem.bankingSystem.account;
 
-public enum AccountType {
+enum AccountType {
     CHECKING("1", "Checking"),
     SAVINGS("2", "Savings");
 

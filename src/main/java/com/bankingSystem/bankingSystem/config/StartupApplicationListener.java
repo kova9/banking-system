@@ -1,10 +1,10 @@
 package com.bankingSystem.bankingSystem.config;
 
-import com.bankingSystem.bankingSystem.account.entity.Account;
-import com.bankingSystem.bankingSystem.customer.entity.Customer;
-import com.bankingSystem.bankingSystem.transaction.entity.Transaction;
-import com.bankingSystem.bankingSystem.customer.repository.CustomerRepository;
-import com.bankingSystem.bankingSystem.transaction.repository.TransactionRepository;
+import com.bankingSystem.bankingSystem.account.Account;
+import com.bankingSystem.bankingSystem.customer.Customer;
+import com.bankingSystem.bankingSystem.transaction.Transaction;
+import com.bankingSystem.bankingSystem.customer.CustomerRepository;
+import com.bankingSystem.bankingSystem.transaction.TransactionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -21,7 +21,7 @@ import java.util.concurrent.*;
 
 @Slf4j
 @Component
-public class StartupApplicationListener implements ApplicationListener<ApplicationReadyEvent> {
+class StartupApplicationListener implements ApplicationListener<ApplicationReadyEvent> {
 
     private final TransactionRepository transactionRepository;
     private final CustomerRepository customerRepository;
